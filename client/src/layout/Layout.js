@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar/Navbar';
 
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';

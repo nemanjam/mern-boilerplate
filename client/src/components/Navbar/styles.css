@@ -1,0 +1,46 @@
+nav {
+  background-color: darkblue;
+  padding-left: 30px;
+  padding-right: 10px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: inline-block;
+  color: white;
+  margin: 0;
+}
+
+.nav-links {
+  list-style: none;
+  font-size: 20px;
+  display: flex;
+  margin: 5px 0;
+}
+
+.nav-item {
+  display: inline-flex;
+}
+
+.nav-item a {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-item:hover {
+  background-color: white;
+}
+
+.nav-item:hover a {
+  color: darkblue;
+}
+
+.flex-1 {
+  flex: 1;
+}
