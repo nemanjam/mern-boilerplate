@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.7",
-    "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
     "formik": "^2.1.4",
     "js-cookie": "^2.2.1",
@@ -16,9 +15,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.1",
     "redux-thunk": "^2.3.0",
-    "validate.js": "^0.12.0",
     "yup": "^0.28.3"
   },
   "scripts": {

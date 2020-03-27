@@ -1,13 +1,13 @@
-.login {
+.register {
   display: flex;
   justify-content: center;
 }
 
-.login .container {
+.register .container {
   max-width: 400px;
 }
 
-.login input,
+.register input,
 .btn {
   width: 100%;
   padding: 12px;
@@ -23,25 +23,12 @@
   background-color: lightgray;
 }
 
-.login input:hover,
+.register input:hover,
 .btn:hover {
   opacity: 1;
 }
 
-.login .fb {
-  background-color: #3b5998;
-  color: white;
-  width: 200px;
-  display: block;
-}
-
-.login .google {
-  background-color: #dd4b39;
-  color: white;
-  width: 200px;
-  display: block;
-}
-.login .submit {
+.register .submit {
   background-color: gray;
   color: white;
 }

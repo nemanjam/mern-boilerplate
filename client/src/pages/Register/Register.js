@@ -1,28 +1,25 @@
 import React, { useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { loginUserWithEmail } from '../../store/actions/authActions';
-import { FACEBOOK_AUTH_LINK, GOOGLE_AUTH_LINK } from '../../constants';
+import { registerUserWithEmail } from '../../store/actions/authActions';
 import './styles.css';
 
-const Login = ({ errors, auth, history, loginUserWithEmail }) => {
+const Register = ({ errors, auth, history, registerUserWithEmail }) => {
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onSubmit = event => {
     event.preventDefault();
 
-    loginUserWithEmail(
-      { email, password },
+    registerUserWithEmail(
+      { fullName, email, password },
       () => {
-        history.push('/');
+        history.push('/login');
       },
       () => {},
     );
@@ -30,62 +27,58 @@ const Login = ({ errors, auth, history, loginUserWithEmail }) => {
 
   const onChange = event => {
     const { name, value } = event.target;
+    if (name === 'fullName') setFullName(value);
     if (name === 'email') setEmail(value);
     if (name === 'password') setPassword(value);
   };
 
-  const isLoading = false;
-
   return (
-    <div className="login">
+    <div className="register">
       <div className="container">
-        <h1>Log in page</h1>
+        <h1>Register page</h1>
         <p>
           back to <Link to="/">Home page</Link>
         </p>
-        <form onSubmit={onSubmit}>
-          <h2>Log in with social media</h2>
-          <a className="fb btn" href={FACEBOOK_AUTH_LINK}>
-            <i class="fa fa-facebook fa-fw" /> Login with Facebook
-          </a>
-          <a className="google btn" href={GOOGLE_AUTH_LINK}>
-            <i class="fa fa-google fa-fw" />
-            Login with Google
-          </a>
-          <h2>Login with email address</h2>
+        <form onSubmit={onSubmit} noValidate>
+          <h2>Create new account</h2>
           <div>
+            <input
+              placeholder="Full Name"
+              name="fullName"
+              value={fullName}
+              onChange={onChange}
+              className=""
+              type="text"
+            />
             <input
               placeholder="Email address"
               name="email"
               value={email}
               onChange={onChange}
-              className="text"
+              className=""
               type="text"
             />
             <input
               placeholder="Password"
               name="password"
               value={password}
-              type="password"
               onChange={onChange}
-              className="text"
+              className=""
+              type="password"
             />
           </div>
           {errors && typeof errors !== 'object' && <p>{errors.toString()}</p>}
           <div>
-            {isLoading ? (
+            {auth.isLoading ? (
               <p>Loading...</p>
             ) : (
-              <button className="btn submit" disabled={false} type="submit">
-                Log in now
+              <button className="btn submit" type="submit">
+                Sign up now
               </button>
             )}
           </div>
           <div>
-            Don't have an account?{' '}
-            <Link className="" to="/register">
-              Register
-            </Link>
+            Have an account? <Link to="/login">Log In</Link>
           </div>
         </form>
       </div>
@@ -98,4 +91,4 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { loginUserWithEmail }))(Login);
+export default compose(withRouter, connect(mapStateToProps, { registerUserWithEmail }))(Register);
