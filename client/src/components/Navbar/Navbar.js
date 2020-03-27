@@ -3,10 +3,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import { logOutUser, loadMe } from '../../store/actions/authActions';
+import { logOutUser } from '../../store/actions/authActions';
 import './styles.css';
 
-const Navbar = ({ auth, logOutUser, loadMe, history }) => {
+const Navbar = ({ auth, logOutUser, history }) => {
   const onLogOut = event => {
     event.preventDefault();
 
@@ -31,6 +31,7 @@ const Navbar = ({ auth, logOutUser, loadMe, history }) => {
               <Link to="/profile">Profile</Link>
             </li>
             <li className="flex-1" />
+            <img className="avatar" src={auth.me.image || 'https://i.pravatar.cc/150'} />
             <li className="nav-item" onClick={onLogOut}>
               <a href="#">Log out</a>
             </li>
@@ -38,6 +39,7 @@ const Navbar = ({ auth, logOutUser, loadMe, history }) => {
         ) : (
           <>
             <li className="flex-1" />
+
             <li className="nav-item">
               <Link to="/login">Login</Link>
             </li>
@@ -53,4 +55,4 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { logOutUser, loadMe }))(Navbar);
+export default compose(withRouter, connect(mapStateToProps, { logOutUser }))(Navbar);

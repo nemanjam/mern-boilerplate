@@ -4,11 +4,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import Register from './pages/Register';
-import Home from './pages/Home';
-import Profile from './pages/private/Profile';
-import Feature from './pages/private/Feature';
+import Home from './pages/Home/Home';
+import Profile from './pages/Profile/Profile';
+import Feature from './pages/Feature/Feature';
 
 import { logInUserWithOauth, loadMe } from './store/actions/authActions';
 

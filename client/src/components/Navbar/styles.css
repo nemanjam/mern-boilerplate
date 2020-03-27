@@ -13,6 +13,7 @@ nav {
   display: inline-block;
   color: white;
   margin: 0;
+  white-space: nowrap;
 }
 
 .nav-links {
@@ -31,6 +32,7 @@ nav {
   padding: 10px 20px;
   text-decoration: none;
   color: white;
+  white-space: nowrap;
 }
 
 .nav-item:hover {
@@ -43,4 +45,10 @@ nav {
 
 .flex-1 {
   flex: 1;
+}
+.avatar {
+  width: 30px;
+  height: 30px;
+  align-self: center;
+  margin-right: 20px;
 }

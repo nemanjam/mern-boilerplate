@@ -1,20 +1,20 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import Layout from '../layout/Layout';
-
-const useStyles = makeStyles(theme => ({}));
+import Layout from '../../layout/Layout';
 
 const Home = ({ auth }) => {
   return (
     <Layout>
+      <h1>Home page</h1>
       {!auth.isAuthenticated ? (
-        <h1>Welcome! Log in or register!</h1>
+        <p>
+          Welcome! <Link to="/login">Log in</Link> or <Link to="/register">Register</Link>
+        </p>
       ) : (
-        <h1>Welcome {auth.me.displayName}!</h1>
+        <p>Welcome {auth.me.displayName}!</p>
       )}
     </Layout>
   );
