@@ -37,7 +37,10 @@ const Register = ({ errors, auth, history, registerUserWithEmail }) => {
       <div className="container">
         <h1>Register page</h1>
         <p>
-          back to <Link to="/">Home page</Link>
+          back to{' '}
+          <Link className="bold" to="/">
+            Home page
+          </Link>
         </p>
         <form onSubmit={onSubmit} noValidate>
           <h2>Create new account</h2>
@@ -78,7 +81,10 @@ const Register = ({ errors, auth, history, registerUserWithEmail }) => {
             )}
           </div>
           <div>
-            Have an account? <Link to="/login">Log In</Link>
+            Have an account?{' '}
+            <Link className="bold" to="/login">
+              Log In
+            </Link>
           </div>
         </form>
       </div>

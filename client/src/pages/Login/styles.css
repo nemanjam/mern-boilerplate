@@ -45,3 +45,7 @@
   background-color: gray;
   color: white;
 }
+
+.login .bold {
+  font-weight: bold;
+}

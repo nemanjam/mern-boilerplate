@@ -41,7 +41,10 @@ const Login = ({ errors, auth, history, loginUserWithEmail }) => {
       <div className="container">
         <h1>Log in page</h1>
         <p>
-          back to <Link to="/">Home page</Link>
+          back to{' '}
+          <Link className="bold" to="/">
+            Home page
+          </Link>
         </p>
         <form onSubmit={onSubmit}>
           <h2>Log in with social media</h2>
@@ -83,7 +86,7 @@ const Login = ({ errors, auth, history, loginUserWithEmail }) => {
           </div>
           <div>
             Don't have an account?{' '}
-            <Link className="" to="/register">
+            <Link className="bold" to="/register">
               Register
             </Link>
           </div>
