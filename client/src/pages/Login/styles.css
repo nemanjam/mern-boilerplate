@@ -9,7 +9,7 @@
 }
 
 .login input,
-.btn {
+.login .btn {
   width: 100%;
   padding: 12px;
   border: none;
@@ -25,7 +25,7 @@
 }
 
 .login input:hover,
-.btn:hover {
+.login .btn:hover {
   opacity: 1;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .login button:disabled,
-button[disabled] {
+.login button[disabled] {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
