@@ -14,7 +14,12 @@ router.post('/auth/login', requireLocalAuth, (req, res) => {
 
 router.post('/auth/register', async (req, res, next) => {
   const schema = Joi.object().keys({
-    fullName: Joi.string()
+    name: Joi.string()
+      .trim()
+      .min(2)
+      .max(24)
+      .required(),
+    username: Joi.string()
       .trim()
       .min(2)
       .max(24)
@@ -36,7 +41,7 @@ router.post('/auth/register', async (req, res, next) => {
   } catch (err) {
     return res.status(422).send({ message: err.details[0].message });
   }
-  const { email, password, fullName } = form;
+  const { email, password, name, username } = form;
 
   try {
     const existingUser = await User.findOne({ email: email });
@@ -50,7 +55,8 @@ router.post('/auth/register', async (req, res, next) => {
         provider: 'email',
         email,
         password,
-        localDisplayName: fullName,
+        username,
+        name,
       });
 
       newUser.registerUser(newUser, (err, user) => {

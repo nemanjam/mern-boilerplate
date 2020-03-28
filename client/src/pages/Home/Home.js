@@ -23,7 +23,7 @@ const Home = ({ auth }) => {
             </Link>
           </p>
         ) : (
-          <p>Welcome {auth.me.displayName}!</p>
+          <p>Welcome {auth.me.name}!</p>
         )}
       </div>
     </Layout>

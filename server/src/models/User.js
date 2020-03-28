@@ -4,56 +4,60 @@ import jwt from 'jsonwebtoken';
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-  provider: {
-    type: String,
-    required: true,
+const userSchema = new Schema(
+  {
+    provider: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be blank"],
+      match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      index: true,
+    },
+    email: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be blank"],
+      match: [/\S+@\S+\.\S+/, 'is invalid'],
+      index: true,
+    },
+    password: {
+      type: String,
+      trim: true,
+      minlength: 6,
+      maxlength: 60,
+    },
+    name: String,
+    avatar: String,
+    // google
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    // fb
+    facebookId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
   },
-
-  // local
-  localDisplayName: String,
-  localPicture: String,
-  email: {
-    type: String,
-    unique: true,
-    sparse: true,
-    trim: true,
-  },
-  password: {
-    type: String,
-    trim: true,
-    minlength: 6,
-    maxlength: 60,
-  },
-
-  // google
-  googleId: {
-    type: String,
-    unique: true,
-    sparse: true,
-  },
-  googleEmail: String,
-  googleDisplayName: String,
-  googlePicture: String,
-
-  // fb
-  facebookId: {
-    type: String,
-    unique: true,
-    sparse: true,
-  },
-  facebookEmail: String,
-  facebookDisplayName: String,
-  facebookPicture: String,
-});
+  { timestamps: true },
+);
 
 userSchema.methods.toAuthJSON = function() {
   return {
     id: this._id,
     provider: this.provider,
-    email: this.email || this.googleEmail || this.facebookEmail,
-    displayName: this.localDisplayName || this.googleDisplayName || this.facebookDisplayName,
-    image: this.localPicture || this.googlePicture || this.facebookPicture,
+    email: this.email,
+    username: this.username,
+    avatar: this.avatar,
+    name: this.name,
   };
 };
 
@@ -63,7 +67,7 @@ userSchema.methods.generateJWT = function() {
       expiresIn: '12h',
       id: this._id,
       provider: this.provider,
-      email: this.email || this.googleEmail || this.facebookEmail,
+      email: this.email,
     },
     process.env.JWT_SECRET_DEV,
   );

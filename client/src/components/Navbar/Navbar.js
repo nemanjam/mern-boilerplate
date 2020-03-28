@@ -31,7 +31,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
               <Link to="/profile">Profile</Link>
             </li>
             <li className="flex-1" />
-            <img className="avatar" src={auth.me.image || 'https://i.pravatar.cc/150'} />
+            <img className="avatar" src={auth.me.avatar || 'https://i.pravatar.cc/150'} />
             <li className="nav-item" onClick={onLogOut}>
               <a href="#">Log out</a>
             </li>

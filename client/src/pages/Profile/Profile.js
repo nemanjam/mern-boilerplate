@@ -15,7 +15,8 @@ const Profile = ({ getProfile, profile, errors }) => {
     <Layout>
       <h1>Profile page</h1>
       <p>Provider: {profile.provider}</p>
-      <p>Display name: {profile.displayName}</p>
+      <p>Name: {profile.name}</p>
+      <p>Username: {profile.username}</p>
       <p>Email: {profile.email}</p>
     </Layout>
   );

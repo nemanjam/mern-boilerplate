@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import {
-  SET_ERROR,
   LOGIN_WITH_OAUTH_LOADING,
   LOGIN_WITH_OAUTH_SUCCESS,
   LOGIN_WITH_OAUTH_FAIL,

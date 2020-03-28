@@ -8,8 +8,9 @@ import _ from 'lodash';
 import { registerUserWithEmail } from '../../store/actions/authActions';
 import './styles.css';
 
-const Register = ({ errors, auth, history, registerUserWithEmail }) => {
-  const [fullName, setFullName] = useState('');
+const Register = ({ auth, history, registerUserWithEmail }) => {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,7 +18,7 @@ const Register = ({ errors, auth, history, registerUserWithEmail }) => {
     event.preventDefault();
 
     registerUserWithEmail(
-      { fullName, email, password },
+      { name, username, email, password },
       () => {
         history.push('/login');
       },
@@ -27,7 +28,8 @@ const Register = ({ errors, auth, history, registerUserWithEmail }) => {
 
   const onChange = event => {
     const { name, value } = event.target;
-    if (name === 'fullName') setFullName(value);
+    if (name === 'name') setName(value);
+    if (name === 'username') setUsername(value);
     if (name === 'email') setEmail(value);
     if (name === 'password') setPassword(value);
   };
@@ -46,9 +48,17 @@ const Register = ({ errors, auth, history, registerUserWithEmail }) => {
           <h2>Create new account</h2>
           <div>
             <input
-              placeholder="Full Name"
-              name="fullName"
-              value={fullName}
+              placeholder="Name"
+              name="name"
+              value={name}
+              onChange={onChange}
+              className=""
+              type="text"
+            />
+            <input
+              placeholder="Username"
+              name="username"
+              value={username}
               onChange={onChange}
               className=""
               type="text"
@@ -94,7 +104,6 @@ const Register = ({ errors, auth, history, registerUserWithEmail }) => {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors,
 });
 
 export default compose(withRouter, connect(mapStateToProps, { registerUserWithEmail }))(Register);
