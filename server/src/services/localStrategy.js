@@ -3,6 +3,7 @@ import { Strategy as PassportLocalStrategy } from 'passport-local';
 import Joi from 'joi';
 
 import User from '../models/User';
+import { loginSchema } from './validators';
 
 const passportLogin = new PassportLocalStrategy(
   {
@@ -12,20 +13,8 @@ const passportLogin = new PassportLocalStrategy(
     passReqToCallback: true,
   },
   async (req, email, password, done) => {
-    const schema = Joi.object().keys({
-      email: Joi.string()
-        .trim()
-        .email()
-        .required(),
-      password: Joi.string()
-        .trim()
-        .min(6)
-        .max(12)
-        .required(),
-    });
-
     try {
-      const form = await Joi.validate(req.body, schema);
+      await Joi.validate(req.body, loginSchema);
     } catch (err) {
       return done(null, false, { message: err.details[0].message });
     }

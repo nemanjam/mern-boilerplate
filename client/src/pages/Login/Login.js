@@ -1,40 +1,34 @@
 import React, { useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import PropTypes from 'prop-types';
+import { useFormik } from 'formik';
+
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { loginUserWithEmail } from '../../store/actions/authActions';
 import { FACEBOOK_AUTH_LINK, GOOGLE_AUTH_LINK } from '../../constants';
+import { loginSchema } from './validation';
 import './styles.css';
 
-const Login = ({ errors, auth, history, loginUserWithEmail }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const onSubmit = event => {
-    event.preventDefault();
-
-    loginUserWithEmail(
-      { email, password },
-      () => {
-        history.push('/');
-      },
-      () => {},
-    );
-  };
-
-  const onChange = event => {
-    const { name, value } = event.target;
-    if (name === 'email') setEmail(value);
-    if (name === 'password') setPassword(value);
-  };
-
-  const isLoading = false;
+const Login = ({ auth, history, loginUserWithEmail }) => {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: loginSchema,
+    onSubmit: values => {
+      loginUserWithEmail(
+        values,
+        () => {
+          history.push('/');
+        },
+        () => {},
+      );
+    },
+  });
 
   return (
     <div className="login">
@@ -46,7 +40,7 @@ const Login = ({ errors, auth, history, loginUserWithEmail }) => {
             Home page
           </Link>
         </p>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <h2>Log in with social media</h2>
           <a className="fb btn" href={FACEBOOK_AUTH_LINK}>
             <i className="fa fa-facebook fa-fw" /> Login with Facebook
@@ -60,29 +54,37 @@ const Login = ({ errors, auth, history, loginUserWithEmail }) => {
             <input
               placeholder="Email address"
               name="email"
-              value={email}
-              onChange={onChange}
               className="text"
               type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
             />
+            {formik.touched.email && formik.errors.email ? (
+              <p className="error">{formik.errors.email}</p>
+            ) : null}
             <input
               placeholder="Password"
               name="password"
-              value={password}
               type="password"
-              onChange={onChange}
               className="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             />
+            {formik.touched.password && formik.errors.password ? (
+              <p className="error">{formik.errors.password}</p>
+            ) : null}
           </div>
           {auth.error && <p className="error">{auth.error}</p>}
           <div>
-            {auth.isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <button className="btn submit" disabled={false} type="submit">
-                Log in now
-              </button>
-            )}
+            <button
+              className="btn submit"
+              disabled={auth.isLoading || !formik.isValid}
+              type="submit"
+            >
+              Log in now
+            </button>
           </div>
           <div>
             Don't have an account?{' '}

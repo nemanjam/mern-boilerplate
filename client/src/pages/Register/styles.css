@@ -5,6 +5,7 @@
 
 .register .container {
   max-width: 400px;
+  flex: 1;
 }
 
 .register input,
@@ -39,4 +40,13 @@
 
 .register .error {
   color: red;
+  margin: 0;
+}
+
+.register button:disabled,
+button[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
 }

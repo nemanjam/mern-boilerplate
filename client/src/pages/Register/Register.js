@@ -5,34 +5,31 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { useFormik } from 'formik';
+
 import { registerUserWithEmail } from '../../store/actions/authActions';
+import { registerSchema } from './validation';
 import './styles.css';
 
 const Register = ({ auth, history, registerUserWithEmail }) => {
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const onSubmit = event => {
-    event.preventDefault();
-
-    registerUserWithEmail(
-      { name, username, email, password },
-      () => {
-        history.push('/login');
-      },
-      () => {},
-    );
-  };
-
-  const onChange = event => {
-    const { name, value } = event.target;
-    if (name === 'name') setName(value);
-    if (name === 'username') setUsername(value);
-    if (name === 'email') setEmail(value);
-    if (name === 'password') setPassword(value);
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      username: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: registerSchema,
+    onSubmit: values => {
+      registerUserWithEmail(
+        values,
+        () => {
+          history.push('/login');
+        },
+        () => {},
+      );
+    },
+  });
 
   return (
     <div className="register">
@@ -44,51 +41,67 @@ const Register = ({ auth, history, registerUserWithEmail }) => {
             Home page
           </Link>
         </p>
-        <form onSubmit={onSubmit} noValidate>
+        <form onSubmit={formik.handleSubmit} noValidate>
           <h2>Create new account</h2>
           <div>
             <input
               placeholder="Name"
               name="name"
-              value={name}
-              onChange={onChange}
               className=""
               type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
             />
+            {formik.touched.name && formik.errors.name ? (
+              <p className="error">{formik.errors.name}</p>
+            ) : null}
             <input
               placeholder="Username"
               name="username"
-              value={username}
-              onChange={onChange}
               className=""
               type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
             />
+            {formik.touched.username && formik.errors.username ? (
+              <p className="error">{formik.errors.username}</p>
+            ) : null}
             <input
               placeholder="Email address"
               name="email"
-              value={email}
-              onChange={onChange}
               className=""
               type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
             />
+            {formik.touched.email && formik.errors.email ? (
+              <p className="error">{formik.errors.email}</p>
+            ) : null}
             <input
               placeholder="Password"
               name="password"
-              value={password}
-              onChange={onChange}
               className=""
               type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             />
+            {formik.touched.password && formik.errors.password ? (
+              <p className="error">{formik.errors.password}</p>
+            ) : null}
           </div>
           {auth.error && <p className="error">{auth.error}</p>}
           <div>
-            {auth.isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <button className="btn submit" type="submit">
-                Sign up now
-              </button>
-            )}
+            <button
+              className="btn submit"
+              type="submit"
+              disabled={auth.isLoading || !formik.isValid}
+            >
+              Sign up now
+            </button>
           </div>
           <div>
             Have an account?{' '}

@@ -3,6 +3,7 @@ import Joi from 'joi';
 
 import User from '../models/User';
 import requireLocalAuth from '../middleware/requireLocalAuth';
+import { registerSchema } from '../services/validators';
 
 const router = Router();
 
@@ -13,31 +14,9 @@ router.post('/auth/login', requireLocalAuth, (req, res) => {
 });
 
 router.post('/auth/register', async (req, res, next) => {
-  const schema = Joi.object().keys({
-    name: Joi.string()
-      .trim()
-      .min(2)
-      .max(24)
-      .required(),
-    username: Joi.string()
-      .trim()
-      .min(2)
-      .max(24)
-      .required(),
-    email: Joi.string()
-      .trim()
-      .email()
-      .required(),
-    password: Joi.string()
-      .trim()
-      .min(6)
-      .max(12)
-      .required(),
-  });
-
   let form;
   try {
-    form = await Joi.validate(req.body, schema);
+    form = await Joi.validate(req.body, registerSchema);
   } catch (err) {
     return res.status(422).send({ message: err.details[0].message });
   }

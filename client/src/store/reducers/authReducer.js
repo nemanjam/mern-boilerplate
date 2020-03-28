@@ -31,6 +31,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
+        error: null,
       };
     case REGISTER_WITH_EMAIL_SUCCESS:
       return {
