@@ -49,10 +49,10 @@ const Login = ({ errors, auth, history, loginUserWithEmail }) => {
         <form onSubmit={onSubmit}>
           <h2>Log in with social media</h2>
           <a className="fb btn" href={FACEBOOK_AUTH_LINK}>
-            <i class="fa fa-facebook fa-fw" /> Login with Facebook
+            <i className="fa fa-facebook fa-fw" /> Login with Facebook
           </a>
           <a className="google btn" href={GOOGLE_AUTH_LINK}>
-            <i class="fa fa-google fa-fw" />
+            <i className="fa fa-google fa-fw" />
             Login with Google
           </a>
           <h2>Login with email address</h2>
@@ -74,9 +74,9 @@ const Login = ({ errors, auth, history, loginUserWithEmail }) => {
               className="text"
             />
           </div>
-          {errors && typeof errors !== 'object' && <p>{errors.toString()}</p>}
+          {auth.error && <p className="error">{auth.error}</p>}
           <div>
-            {isLoading ? (
+            {auth.isLoading ? (
               <p>Loading...</p>
             ) : (
               <button className="btn submit" disabled={false} type="submit">

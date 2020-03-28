@@ -34,7 +34,7 @@ router.post('/auth/register', async (req, res, next) => {
   try {
     form = await Joi.validate(req.body, schema);
   } catch (err) {
-    return res.status(422).send(err.details[0].message);
+    return res.status(422).send({ message: err.details[0].message });
   }
   const { email, password, fullName } = form;
 
@@ -42,7 +42,7 @@ router.post('/auth/register', async (req, res, next) => {
     const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      return res.status(422).send({ error: 'Email is in use' });
+      return res.status(422).send({ message: 'Email is in use' });
     }
 
     try {

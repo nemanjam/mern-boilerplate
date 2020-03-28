@@ -36,3 +36,7 @@
 .register .bold {
   font-weight: bold;
 }
+
+.register .error {
+  color: red;
+}

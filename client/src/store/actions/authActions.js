@@ -30,12 +30,8 @@ export const loadMe = () => async (dispatch, getState) => {
     });
   } catch (err) {
     dispatch({
-      type: SET_ERROR,
-      payload: err.response.data,
-    });
-
-    dispatch({
       type: ME_FAIL,
+      payload: { error: err.response.data.message },
     });
   }
 };
@@ -50,12 +46,8 @@ export const registerUserWithEmail = (formData, cb, cbErr) => async (dispatch, g
     cb();
   } catch (err) {
     dispatch({
-      type: SET_ERROR,
-      payload: err.response.data,
-    });
-
-    dispatch({
       type: REGISTER_WITH_EMAIL_FAIL,
+      payload: { error: err.response.data.message },
     });
     cbErr();
   }
@@ -72,14 +64,9 @@ export const loginUserWithEmail = (formData, cb, cbErr) => async (dispatch, getS
     });
     cb();
   } catch (err) {
-    console.log(err);
-    dispatch({
-      type: SET_ERROR,
-      //payload: err.response.data,
-    });
-
     dispatch({
       type: LOGIN_WITH_EMAIL_FAIL,
+      payload: { error: err.response.data.message },
     });
     cbErr();
   }
@@ -103,11 +90,7 @@ export const logInUserWithOauth = token => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: LOGIN_WITH_OAUTH_FAIL,
-    });
-
-    dispatch({
-      type: SET_ERROR,
-      payload: err.response.data,
+      payload: { error: err.response.data.message },
     });
   }
 };
@@ -123,10 +106,6 @@ export const logOutUser = cb => async dispatch => {
     });
     cb();
   } catch (err) {
-    dispatch({
-      type: SET_ERROR,
-      payload: err.response.data,
-    });
     cb();
   }
 };

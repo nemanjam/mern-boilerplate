@@ -19,6 +19,7 @@ const initialState = {
   isAuthenticated: false,
   isLoading: false,
   me: null,
+  error: null,
 };
 
 export default function(state = initialState, action) {
@@ -35,6 +36,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+        error: null,
       };
     case LOGIN_WITH_EMAIL_SUCCESS:
     case LOGIN_WITH_OAUTH_SUCCESS:
@@ -45,6 +47,7 @@ export default function(state = initialState, action) {
         isLoading: false,
         token: action.payload.token,
         me: action.payload.me,
+        error: null,
       };
     case ME_SUCCESS:
       return {
@@ -52,6 +55,7 @@ export default function(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         me: action.payload.me,
+        error: null,
       };
     case LOGOUT_SUCCESS:
     case ME_FAIL:
@@ -64,6 +68,7 @@ export default function(state = initialState, action) {
         me: null,
         isAuthenticated: false,
         isLoading: false,
+        error: action.payload?.error || null,
       };
     default:
       return state;

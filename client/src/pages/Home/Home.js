@@ -4,18 +4,28 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Layout from '../../layout/Layout';
+import './styles.css';
 
 const Home = ({ auth }) => {
   return (
     <Layout>
-      <h1>Home page</h1>
-      {!auth.isAuthenticated ? (
-        <p>
-          Welcome! <Link to="/login">Log in</Link> or <Link to="/register">Register</Link>
-        </p>
-      ) : (
-        <p>Welcome {auth.me.displayName}!</p>
-      )}
+      <div className="home">
+        <h1>Home page</h1>
+        {!auth.isAuthenticated ? (
+          <p>
+            Welcome!{' '}
+            <Link className="bold" to="/login">
+              Log in
+            </Link>{' '}
+            or{' '}
+            <Link className="bold" to="/register">
+              Register
+            </Link>
+          </p>
+        ) : (
+          <p>Welcome {auth.me.displayName}!</p>
+        )}
+      </div>
     </Layout>
   );
 };

@@ -70,7 +70,7 @@ const Register = ({ errors, auth, history, registerUserWithEmail }) => {
               type="password"
             />
           </div>
-          {errors && typeof errors !== 'object' && <p>{errors.toString()}</p>}
+          {auth.error && <p className="error">{auth.error}</p>}
           <div>
             {auth.isLoading ? (
               <p>Loading...</p>

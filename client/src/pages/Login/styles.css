@@ -49,3 +49,7 @@
 .login .bold {
   font-weight: bold;
 }
+
+.login .error {
+  color: red;
+}
