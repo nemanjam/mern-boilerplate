@@ -4,7 +4,7 @@ import requireJwtAuth from '../../middleware/requireJwtAuth';
 const router = Router();
 
 router.get('/me', requireJwtAuth, (req, res) => {
-  const me = req.user.toAuthJSON();
+  const me = req.user.toJSON();
   res.send({ me });
 });
 

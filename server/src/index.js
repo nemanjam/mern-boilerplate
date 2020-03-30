@@ -7,6 +7,7 @@ import { resolve } from 'path';
 import passport from 'passport';
 
 import routes from './routes';
+import { seedDb } from './utils/seed';
 
 const app = express();
 
@@ -32,7 +33,10 @@ mongoose
     useCreateIndex: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log('MongoDB Connected...'))
+  .then(() => {
+    console.log('MongoDB Connected...');
+    seedDb();
+  })
   .catch(err => console.log(err));
 
 // Use Routes

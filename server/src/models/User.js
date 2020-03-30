@@ -48,11 +48,12 @@ const userSchema = new Schema(
       unique: true,
       sparse: true,
     },
+    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
   },
   { timestamps: true },
 );
 
-userSchema.methods.toAuthJSON = function() {
+userSchema.methods.toJSON = function() {
   return {
     id: this._id,
     provider: this.provider,
