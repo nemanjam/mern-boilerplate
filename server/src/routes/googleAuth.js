@@ -1,18 +1,17 @@
 import { Router } from 'express';
 import passport from 'passport';
-import tokenFromUser from '../utils/utils';
 
 const router = Router();
 
 router.get(
-  '/auth/google',
+  '/google',
   passport.authenticate('google', {
     scope: ['profile', 'email'],
   }),
 );
 
 router.get(
-  process.env.GOOGLE_CALLBACK_URL,
+  '/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/',
     session: false,

@@ -21,7 +21,7 @@ export const loadMe = () => async (dispatch, getState) => {
 
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/me', options);
+    const response = await axios.get('/api/users/me', options);
 
     dispatch({
       type: ME_SUCCESS,
@@ -80,7 +80,7 @@ export const logInUserWithOauth = token => async (dispatch, getState) => {
       'x-auth-token': token,
     };
 
-    const response = await axios.get('/api/me', { headers });
+    const response = await axios.get('/api/users/me', { headers });
 
     dispatch({
       type: LOGIN_WITH_OAUTH_SUCCESS,

@@ -4,14 +4,14 @@ import passport from 'passport';
 const router = Router();
 
 router.get(
-  '/auth/facebook',
+  '/facebook',
   passport.authenticate('facebook', {
     scope: ['public_profile', 'email'],
   }),
 );
 
 router.get(
-  process.env.FACEBOOK_CALLBACK_URL,
+  '/facebook/callback',
   passport.authenticate('facebook', {
     failureRedirect: '/',
     session: false,

@@ -24,6 +24,7 @@ const Profile = ({ getProfile, profile, errors }) => {
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: profile.name,
       username: profile.username,

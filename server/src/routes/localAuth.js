@@ -7,13 +7,13 @@ import { registerSchema } from '../services/validators';
 
 const router = Router();
 
-router.post('/auth/login', requireLocalAuth, (req, res) => {
+router.post('/login', requireLocalAuth, (req, res) => {
   const token = req.user.generateJWT();
   const me = req.user.toAuthJSON();
   res.json({ token, me });
 });
 
-router.post('/auth/register', async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   let form;
   try {
     form = await Joi.validate(req.body, registerSchema);
@@ -51,7 +51,7 @@ router.post('/auth/register', async (req, res, next) => {
 });
 
 // logout
-router.get('/auth/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   req.logout();
   res.send(false);
 });

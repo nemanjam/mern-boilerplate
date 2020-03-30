@@ -6,11 +6,11 @@ import { GET_FEATURE, GET_PROFILE, SET_ERROR } from '../types';
 export const getProfile = () => async (dispatch, getState) => {
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/profile', options);
+    const response = await axios.get('/api/users/me', options);
 
     dispatch({
       type: GET_PROFILE,
-      payload: response.data.profile,
+      payload: response.data.me,
     });
   } catch (err) {
     dispatch({
@@ -23,7 +23,7 @@ export const getProfile = () => async (dispatch, getState) => {
 export const getFeature = () => async (dispatch, getState) => {
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/feature', options);
+    const response = await axios.get('/api/users/feature', options);
 
     dispatch({
       type: GET_FEATURE,

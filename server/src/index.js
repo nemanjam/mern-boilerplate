@@ -6,10 +6,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import passport from 'passport';
 
-import localAuthRoutes from './routes/localAuth';
-import googleAuthRoutes from './routes/googleAuth';
-import facebookAuthRoutes from './routes/facebookAuth';
-import apiRoutes from './routes/api';
+import routes from './routes';
 
 const app = express();
 
@@ -39,10 +36,7 @@ mongoose
   .catch(err => console.log(err));
 
 // Use Routes
-app.use('/', localAuthRoutes);
-app.use('/', googleAuthRoutes);
-app.use('/', facebookAuthRoutes);
-app.use('/', apiRoutes);
+app.use('/', routes);
 app.use('/static', express.static(__dirname + '/static'));
 
 // Serve static assets if in production
