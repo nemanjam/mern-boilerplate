@@ -5,15 +5,61 @@ import Message from '../../models/Message';
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const messages = await Message.find({})
-    .sort({ createdAt: 'desc' })
-    .populate('user');
+  try {
+    const messages = await Message.find()
+      .sort({ createdAt: 'desc' })
+      .populate('user');
 
-  res.send({
-    messages: messages.map(m => {
-      return m.toJSON();
-    }),
-  });
+    res.json({
+      messages: messages.map(m => {
+        return m.toJSON();
+      }),
+    });
+  } catch (err) {
+    res.status(500).json('Something went wrong.');
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const message = await Message.findById(req.params.id).populate('user');
+    if (!message) return res.status(404).json('No message found.');
+    res.json({ message: message.toJSON() });
+  } catch (err) {
+    res.status(500).json('Something went wrong.');
+  }
+});
+
+router.post('/', requireJwtAuth, async (req, res) => {
+  try {
+    const message = await Message.create({
+      text: req.body.text,
+      user: req.user.id,
+    });
+    res.status(200).json({ message: message.toJSON() });
+  } catch (err) {
+    res.status(500).json('Something went wrong.');
+  }
+});
+
+router.delete('/:id', requireJwtAuth, async (req, res) => {
+  try {
+    const message = await Message.findByIdAndRemove(req.params.id);
+    if (!message) return res.status(404).json('No message found.');
+    res.status(200).json({ message });
+  } catch (err) {
+    res.status(500).json('Something went wrong.');
+  }
+});
+
+router.put('/:id', requireJwtAuth, async (req, res) => {
+  try {
+    const message = Message.findByIdAndUpdate(req.params.id, { text: req.body.text, user: req.user.id }, { new: true });
+    if (!message) return res.status(404).json('No message found.');
+    res.status(200).json({ message });
+  } catch (err) {
+    res.status(500).json('Something went wrong.');
+  }
 });
 
 export default router;

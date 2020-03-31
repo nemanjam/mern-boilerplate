@@ -23,6 +23,7 @@ export const seedDb = async () => {
     if (index === 0) {
       user.role = 'ADMIN';
     }
+    user.registerUser(user, () => {});
 
     return user;
   });
