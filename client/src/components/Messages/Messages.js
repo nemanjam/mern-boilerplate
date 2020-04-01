@@ -17,7 +17,7 @@ const Messages = ({ getMessages, message: { messages, isLoading, error } }) => {
       <h2>Messages:</h2>
       {messages.map((message, index) => {
         return (
-          <div key={index}>
+          <div key={index} className="message">
             <span className="name">{message.user.name}</span>
             <span className="username">@{message.user.username}</span>
             <span className="time">{moment(message.createdAt).fromNow()}</span>
