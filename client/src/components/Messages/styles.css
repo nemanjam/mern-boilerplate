@@ -1,0 +1,9 @@
+.name {
+  font-size: 20px;
+  font-weight: bold;
+}
+.username,
+.time {
+  font-size: 18px;
+  margin-left: 5px;
+}

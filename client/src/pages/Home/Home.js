@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Layout from '../../layout/Layout';
+import Messages from '../../components/Messages/Messages';
 import './styles.css';
 
 const Home = ({ auth }) => {
@@ -25,6 +26,7 @@ const Home = ({ auth }) => {
         ) : (
           <p>Welcome {auth.me.name}!</p>
         )}
+        <Messages />
       </div>
     </Layout>
   );
