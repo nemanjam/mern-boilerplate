@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import Layout from '../../layout/Layout';
 import Messages from '../../components/Messages/Messages';
+import MessageForm from '../../components/MessageForm/MessageForm';
+
 import './styles.css';
 
 const Home = ({ auth }) => {
@@ -24,7 +26,10 @@ const Home = ({ auth }) => {
             </Link>
           </p>
         ) : (
-          <p>Welcome {auth.me.name}!</p>
+          <>
+            <p>Welcome {auth.me.name}!</p>
+            <MessageForm />
+          </>
         )}
         <Messages />
       </div>

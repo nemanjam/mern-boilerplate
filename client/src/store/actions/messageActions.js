@@ -16,9 +16,10 @@ export const getMessages = () => async (dispatch, getState) => {
       payload: { messages: response.data.messages },
     });
   } catch (err) {
+    // console.log('err', JSON.stringify(err, null, 2));
     dispatch({
       type: GET_MESSAGES_FAIL,
-      payload: err.response.data,
+      payload: err.message,
     });
   }
 };
