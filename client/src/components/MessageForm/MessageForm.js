@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
+import { addMessage } from '../../store/actions/messageActions';
+
 import './styles.css';
 
-const MessageForm = ({}) => {
+const MessageForm = ({ addMessage }) => {
   const [text, setText] = useState('');
 
   return (
@@ -12,6 +14,7 @@ const MessageForm = ({}) => {
       <form
         onSubmit={e => {
           e.preventDefault();
+          addMessage({ text });
           setText('');
         }}
       >
@@ -29,4 +32,4 @@ const MessageForm = ({}) => {
   );
 };
 
-export default connect(null, {})(MessageForm);
+export default connect(null, { addMessage })(MessageForm);
