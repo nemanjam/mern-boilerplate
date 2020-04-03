@@ -46,8 +46,9 @@ router.post('/', requireJwtAuth, async (req, res) => {
 
 router.delete('/:id', requireJwtAuth, async (req, res) => {
   try {
-    const message = await Message.findByIdAndRemove(req.params.id);
+    const message = await Message.findByIdAndRemove(req.params.id).populate('user');
     if (!message) return res.status(404).json('No message found.');
+    if (message.user.id !== req.user.id) return res.status(400).json('Not the message owner.');
     res.status(200).json({ message });
   } catch (err) {
     res.status(500).json('Something went wrong.');

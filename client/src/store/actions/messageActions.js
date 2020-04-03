@@ -8,6 +8,9 @@ import {
   ADD_MESSAGE_LOADING,
   ADD_MESSAGE_SUCCESS,
   ADD_MESSAGE_FAIL,
+  DELETE_MESSAGE_LOADING,
+  DELETE_MESSAGE_SUCCESS,
+  DELETE_MESSAGE_FAIL,
 } from '../types';
 
 export const getMessages = () => async (dispatch, getState) => {
@@ -46,6 +49,26 @@ export const addMessage = formData => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: ADD_MESSAGE_FAIL,
+      payload: err.message,
+    });
+  }
+};
+
+export const deleteMessage = id => async (dispatch, getState) => {
+  dispatch({
+    type: DELETE_MESSAGE_LOADING,
+  });
+  try {
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.delete(`/api/messages/${id}`, options);
+
+    dispatch({
+      type: DELETE_MESSAGE_SUCCESS,
+      payload: { message: response.data.message },
+    });
+  } catch (err) {
+    dispatch({
+      type: DELETE_MESSAGE_FAIL,
       payload: err.message,
     });
   }

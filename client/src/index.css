@@ -41,6 +41,10 @@ textarea:hover,
   font-weight: bold;
 }
 
+.text-light {
+  color: gray;
+}
+
 .error {
   color: red;
   margin: 0;

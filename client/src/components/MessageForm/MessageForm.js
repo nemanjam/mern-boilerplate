@@ -8,16 +8,16 @@ import './styles.css';
 const MessageForm = ({ addMessage }) => {
   const [text, setText] = useState('');
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    addMessage({ text });
+    setText('');
+  };
+
   return (
     <div className="message-form">
       <h2>Write a message</h2>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          addMessage({ text });
-          setText('');
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <textarea
           name="text"
           cols="30"

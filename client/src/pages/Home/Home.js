@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Layout from '../../layout/Layout';
-import Messages from '../../components/Messages/Messages';
+import MessageList from '../../components/MessageList/MessageList';
 import MessageForm from '../../components/MessageForm/MessageForm';
 
 import './styles.css';
@@ -31,7 +31,7 @@ const Home = ({ auth }) => {
             <MessageForm />
           </>
         )}
-        <Messages />
+        <MessageList />
       </div>
     </Layout>
   );
