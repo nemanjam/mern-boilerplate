@@ -8,6 +8,9 @@ import {
   DELETE_MESSAGE_LOADING,
   DELETE_MESSAGE_SUCCESS,
   DELETE_MESSAGE_FAIL,
+  EDIT_MESSAGE_LOADING,
+  EDIT_MESSAGE_SUCCESS,
+  EDIT_MESSAGE_FAIL,
 } from '../types';
 
 const initialState = {
@@ -21,6 +24,7 @@ export default function(state = initialState, { type, payload }) {
     case GET_MESSAGES_LOADING:
     case ADD_MESSAGE_LOADING:
     case DELETE_MESSAGE_LOADING:
+    case EDIT_MESSAGE_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -43,9 +47,19 @@ export default function(state = initialState, { type, payload }) {
         isLoading: false,
         messages: state.messages.filter(m => m.id !== payload.message.id),
       };
+    case EDIT_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        messages: state.messages.map(m => {
+          if (m.id === payload.message.id) return payload.message;
+          return m;
+        }),
+      };
     case GET_MESSAGES_FAIL:
     case ADD_MESSAGE_FAIL:
     case DELETE_MESSAGE_FAIL:
+    case EDIT_MESSAGE_FAIL:
       return {
         ...state,
         isLoading: false,

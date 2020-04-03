@@ -46,9 +46,11 @@ router.post('/', requireJwtAuth, async (req, res) => {
 
 router.delete('/:id', requireJwtAuth, async (req, res) => {
   try {
+    const tempMessage = await Message.findById(req.params.id).populate('user');
+    if (tempMessage.user.id !== req.user.id) return res.status(400).json('Not the message owner.');
+
     const message = await Message.findByIdAndRemove(req.params.id).populate('user');
     if (!message) return res.status(404).json('No message found.');
-    if (message.user.id !== req.user.id) return res.status(400).json('Not the message owner.');
     res.status(200).json({ message });
   } catch (err) {
     res.status(500).json('Something went wrong.');
@@ -57,12 +59,20 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
 
 router.put('/:id', requireJwtAuth, async (req, res) => {
   try {
-    let message = Message.findByIdAndUpdate(req.params.id, { text: req.body.text, user: req.user.id }, { new: true });
+    const tempMessage = await Message.findById(req.params.id).populate('user');
+    if (tempMessage.user.id !== req.user.id) return res.status(400).json('Not the message owner.');
+
+    let message = await Message.findByIdAndUpdate(
+      req.params.id,
+      { text: req.body.text, user: req.user.id },
+      { new: true },
+    );
     if (!message) return res.status(404).json('No message found.');
     message = await message.populate('user').execPopulate();
 
     res.status(200).json({ message });
   } catch (err) {
+    console.log(err);
     res.status(500).json('Something went wrong.');
   }
 });

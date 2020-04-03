@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { deleteMessage } from '../../store/actions/messageActions';
+import { deleteMessage, editMessage } from '../../store/actions/messageActions';
 
 import './styles.css';
 
-const Message = ({ message, auth, deleteMessage }) => {
-  const handleDelete = (e, id) => {
+const Message = ({ message, auth, deleteMessage, editMessage }) => {
+  const [isEdit, setIsEdit] = useState(false);
+  const [text, setText] = useState(message.text);
+
+  const handleDeleteOrEdit = (e, id) => {
     e.preventDefault();
-    deleteMessage(id);
+    if (!isEdit) {
+      deleteMessage(id);
+    } else {
+      editMessage(id, { text });
+    }
   };
 
   return (
@@ -22,12 +29,18 @@ const Message = ({ message, auth, deleteMessage }) => {
           <span className="time text-light">{moment(message.createdAt).fromNow()}</span>
         </div>
       </div>
-      <p>{message.text}</p>
+      {isEdit ? (
+        <textarea onChange={e => setText(e.target.value)} value={text} />
+      ) : (
+        <p>{message.text}</p>
+      )}
       {auth.isAuthenticated && auth.me.id === message.user.id && (
         <>
-          <button className="btn">Edit Message</button>
-          <button onClick={e => handleDelete(e, message.id)} className="btn">
-            Delete Message
+          <button onClick={() => setIsEdit(oldIsEdit => !oldIsEdit)} type="button" className="btn">
+            {isEdit ? 'Cancel Edit' : 'Edit Message'}
+          </button>
+          <button onClick={e => handleDeleteOrEdit(e, message.id)} type="button" className="btn">
+            {isEdit ? 'Submit Edit' : 'Delete Message'}
           </button>
         </>
       )}
@@ -39,4 +52,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { deleteMessage })(Message);
+export default connect(mapStateToProps, { deleteMessage, editMessage })(Message);
