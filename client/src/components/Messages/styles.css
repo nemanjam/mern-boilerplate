@@ -12,3 +12,23 @@
   border-bottom: 1px solid black;
   padding: 20px 0;
 }
+
+.message .avatar {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+}
+
+.message .message-header {
+  display: flex;
+  align-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.message p {
+  margin: 0;
+}
+
+.message .btn {
+  width: auto;
+}

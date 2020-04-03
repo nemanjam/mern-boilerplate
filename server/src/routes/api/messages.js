@@ -32,10 +32,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', requireJwtAuth, async (req, res) => {
   try {
-    const message = await Message.create({
+    let message = await Message.create({
       text: req.body.text,
       user: req.user.id,
     });
+    message = await message.populate('user').execPopulate();
+
     res.status(200).json({ message: message.toJSON() });
   } catch (err) {
     res.status(500).json('Something went wrong.');
