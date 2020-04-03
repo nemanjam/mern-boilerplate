@@ -8,27 +8,6 @@
   flex: 1;
 }
 
-.login input,
-.login .btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  margin: 5px 0;
-  opacity: 0.85;
-  display: inline-block;
-  font-size: 17px;
-  line-height: 20px;
-  text-decoration: none;
-  box-sizing: border-box;
-  background-color: lightgray;
-}
-
-.login input:hover,
-.login .btn:hover {
-  opacity: 1;
-}
-
 .login .fb {
   background-color: #3b5998;
   color: white;
@@ -41,25 +20,4 @@
   color: white;
   width: 200px;
   display: block;
-}
-.login .submit {
-  background-color: gray;
-  color: white;
-}
-
-.login .bold {
-  font-weight: bold;
-}
-
-.login .error {
-  color: red;
-  margin: 0;
-}
-
-.login button:disabled,
-.login button[disabled] {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-  cursor: not-allowed;
 }
