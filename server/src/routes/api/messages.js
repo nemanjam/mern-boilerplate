@@ -57,8 +57,10 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
 
 router.put('/:id', requireJwtAuth, async (req, res) => {
   try {
-    const message = Message.findByIdAndUpdate(req.params.id, { text: req.body.text, user: req.user.id }, { new: true });
+    let message = Message.findByIdAndUpdate(req.params.id, { text: req.body.text, user: req.user.id }, { new: true });
     if (!message) return res.status(404).json('No message found.');
+    message = await message.populate('user').execPopulate();
+
     res.status(200).json({ message });
   } catch (err) {
     res.status(500).json('Something went wrong.');

@@ -24,9 +24,12 @@ const Message = ({ message, auth, deleteMessage }) => {
       </div>
       <p>{message.text}</p>
       {auth.isAuthenticated && auth.me.id === message.user.id && (
-        <button onClick={e => handleDelete(e, message.id)} className="btn">
-          Delete Message
-        </button>
+        <>
+          <button className="btn">Edit Message</button>
+          <button onClick={e => handleDelete(e, message.id)} className="btn">
+            Delete Message
+          </button>
+        </>
       )}
     </div>
   );

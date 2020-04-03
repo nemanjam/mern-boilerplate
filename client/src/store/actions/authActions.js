@@ -61,6 +61,8 @@ export const loginUserWithEmail = (formData, cb, cbErr) => async (dispatch, getS
       type: LOGIN_WITH_EMAIL_SUCCESS,
       payload: { token: response.data.token, me: response.data.me },
     });
+
+    dispatch(loadMe());
     cb();
   } catch (err) {
     dispatch({
