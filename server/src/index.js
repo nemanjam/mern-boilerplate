@@ -29,7 +29,7 @@ const dbConnection = isProduction ? process.env.MONGO_URI_PROD : process.env.MON
 // Connect to Mongo
 mongoose
   .connect(dbConnection, {
-    useNewUrlParser: true, // Adding new mongo url parser
+    useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

@@ -6,7 +6,7 @@ import { deleteMessage, editMessage } from '../../store/actions/messageActions';
 
 import './styles.css';
 
-const Message = ({ message, auth, deleteMessage, editMessage }) => {
+const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [text, setText] = useState(message.text);
 
@@ -16,6 +16,7 @@ const Message = ({ message, auth, deleteMessage, editMessage }) => {
       deleteMessage(id);
     } else {
       editMessage(id, { text });
+      setIsEdit(false);
     }
   };
 
@@ -30,17 +31,23 @@ const Message = ({ message, auth, deleteMessage, editMessage }) => {
         </div>
       </div>
       {isEdit ? (
-        <textarea onChange={e => setText(e.target.value)} value={text} />
+        <textarea
+          onChange={e => setText(e.target.value)}
+          value={text}
+          disabled={messageRedux.isLoadingMessageId === message.id}
+        />
       ) : (
-        <p>{message.text}</p>
+        <p style={messageRedux.isLoadingMessageId === message.id ? { backgroundColor: 'red' } : {}}>
+          {message.text}
+        </p>
       )}
       {auth.isAuthenticated && auth.me.id === message.user.id && (
         <>
           <button onClick={() => setIsEdit(oldIsEdit => !oldIsEdit)} type="button" className="btn">
-            {isEdit ? 'Cancel Edit' : 'Edit Message'}
+            {isEdit ? 'Cancel' : 'Edit'}
           </button>
           <button onClick={e => handleDeleteOrEdit(e, message.id)} type="button" className="btn">
-            {isEdit ? 'Submit Edit' : 'Delete Message'}
+            {isEdit ? 'Submit' : 'Delete'}
           </button>
         </>
       )}
@@ -50,6 +57,7 @@ const Message = ({ message, auth, deleteMessage, editMessage }) => {
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  messageRedux: state.message,
 });
 
 export default connect(mapStateToProps, { deleteMessage, editMessage })(Message);

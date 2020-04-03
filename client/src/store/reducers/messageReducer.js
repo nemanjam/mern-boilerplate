@@ -17,18 +17,24 @@ const initialState = {
   messages: [],
   isLoading: false,
   error: null,
+  isLoadingMessageId: null,
 };
 
 export default function(state = initialState, { type, payload }) {
   switch (type) {
     case GET_MESSAGES_LOADING:
     case ADD_MESSAGE_LOADING:
-    case DELETE_MESSAGE_LOADING:
-    case EDIT_MESSAGE_LOADING:
       return {
         ...state,
         isLoading: true,
       };
+    case DELETE_MESSAGE_LOADING:
+    case EDIT_MESSAGE_LOADING:
+      return {
+        ...state,
+        isLoadingMessageId: payload.id,
+      };
+
     case GET_MESSAGES_SUCCESS:
       return {
         ...state,
@@ -44,13 +50,13 @@ export default function(state = initialState, { type, payload }) {
     case DELETE_MESSAGE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isLoadingMessageId: null,
         messages: state.messages.filter(m => m.id !== payload.message.id),
       };
     case EDIT_MESSAGE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isLoadingMessageId: null,
         messages: state.messages.map(m => {
           if (m.id === payload.message.id) return payload.message;
           return m;
@@ -63,6 +69,7 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         isLoading: false,
+        isLoadingMessageId: null,
         error: payload,
       };
     default:
