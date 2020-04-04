@@ -74,7 +74,6 @@ export default function (state = initialState, { type, payload }) {
     case EDIT_MESSAGE_SUCCESS:
       return {
         ...state,
-        isLoadingMessageId: null,
         messages: state.messages.map((m) => {
           if (m.id === payload.message.id) return payload.message;
           return m;
