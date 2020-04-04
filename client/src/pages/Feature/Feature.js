@@ -2,28 +2,37 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import { getFeature } from '../../store/actions/privateActions';
+import { getUsers } from '../../store/actions/userActions';
 import Layout from '../../layout/Layout';
 import requireAuth from '../../hoc/requireAuth';
 
-const Feature = ({ getFeature, message, errors }) => {
+const Feature = ({ getUsers, user: { users } }) => {
   useEffect(() => {
-    getFeature();
+    getUsers();
   }, []);
 
   return (
     <Layout>
       <div>
-        <h1>Feature page</h1>
-        <p>{message}</p>
+        <h1>Users page</h1>
+        {users.map((user, index) => {
+          return (
+            <div key={index}>
+              <p>{user.name}</p>
+              <p>{user.username}</p>
+              <p>{user.email}</p>
+              <p>{user.provider}</p>
+              <img src={user.avatar} />
+            </div>
+          );
+        })}
       </div>
     </Layout>
   );
 };
 
-const mapStateToProps = state => ({
-  message: state.private.message,
-  errors: state.errors,
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
-export default compose(requireAuth, connect(mapStateToProps, { getFeature }))(Feature);
+export default compose(requireAuth, connect(mapStateToProps, { getUsers }))(Feature);

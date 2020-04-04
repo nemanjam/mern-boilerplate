@@ -1,7 +1,14 @@
 import axios from 'axios';
 
 import { attachTokenToHeaders } from './authActions';
-import { GET_FEATURE, GET_PROFILE, SET_ERROR } from '../types';
+import {
+  GET_FEATURE,
+  GET_PROFILE,
+  SET_ERROR,
+  GET_USERS_LOADING,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAIL,
+} from '../types';
 
 export const getProfile = () => async (dispatch, getState) => {
   try {
@@ -20,19 +27,22 @@ export const getProfile = () => async (dispatch, getState) => {
   }
 };
 
-export const getFeature = () => async (dispatch, getState) => {
+export const getUsers = () => async (dispatch, getState) => {
+  dispatch({
+    type: GET_USERS_LOADING,
+  });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/users/feature', options);
+    const response = await axios.get('/api/users', options);
 
     dispatch({
-      type: GET_FEATURE,
-      payload: response.data.feature,
+      type: GET_USERS_SUCCESS,
+      payload: { users: response.data.users },
     });
   } catch (err) {
     dispatch({
-      type: SET_ERROR,
-      payload: err.response.data,
+      type: GET_USERS_FAIL,
+      payload: err.message,
     });
   }
 };

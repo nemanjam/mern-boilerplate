@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 
-import { getProfile } from '../../store/actions/privateActions';
+import { getProfile } from '../../store/actions/userActions';
 import Layout from '../../layout/Layout';
 import requireAuth from '../../hoc/requireAuth';
 import { profileSchema } from './validation';
@@ -18,7 +18,7 @@ const Profile = ({ getProfile, profile, errors }) => {
     getProfile();
   }, []);
 
-  const onChange = event => {
+  const onChange = (event) => {
     formik.setFieldValue('image', event.currentTarget.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
   };
@@ -31,7 +31,7 @@ const Profile = ({ getProfile, profile, errors }) => {
       password: '',
     },
     validationSchema: profileSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       console.log(values);
     },
   });
@@ -111,7 +111,7 @@ const Profile = ({ getProfile, profile, errors }) => {
             className="btn"
             type="button"
             onClick={() => {
-              setIsEdit(oldIsEdit => !oldIsEdit);
+              setIsEdit((oldIsEdit) => !oldIsEdit);
               setImage(null);
             }}
           >
@@ -132,8 +132,8 @@ const Profile = ({ getProfile, profile, errors }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  profile: state.private.profile,
+const mapStateToProps = (state) => ({
+  profile: state.user.profile,
   errors: state.errors,
 });
 

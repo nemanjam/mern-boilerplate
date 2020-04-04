@@ -1,15 +1,31 @@
 import { Router } from 'express';
+
 import requireJwtAuth from '../../middleware/requireJwtAuth';
+import User from '../../models/User';
 
 const router = Router();
 
 router.get('/me', requireJwtAuth, (req, res) => {
   const me = req.user.toJSON();
-  res.send({ me });
+  res.json({ me });
+});
+
+router.get('/', requireJwtAuth, async (req, res) => {
+  try {
+    const users = await User.find().sort({ createdAt: 'desc' });
+
+    res.json({
+      users: users.map((m) => {
+        return m.toJSON();
+      }),
+    });
+  } catch (err) {
+    res.status(500).json('Something went wrong.');
+  }
 });
 
 router.get('/feature', requireJwtAuth, (req, res) => {
-  res.send({
+  res.json({
     feature: 'This is a feature. Only authenticated users can see this.',
   });
 });
