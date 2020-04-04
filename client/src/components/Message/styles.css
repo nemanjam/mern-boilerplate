@@ -34,3 +34,8 @@
   width: auto;
   margin-right: 10px;
 }
+
+.active {
+  background-color: red;
+  /* transition: background-color 100ms linear; */
+}

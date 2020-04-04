@@ -21,7 +21,7 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
   };
 
   return (
-    <div className="message">
+    <div className={messageRedux.isLoadingMessageId === message.id ? 'message active' : 'message'}>
       <div className="message-header">
         <img src={message.user.avatar} className="avatar" />
         <div>
@@ -32,30 +32,57 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
       </div>
       {isEdit ? (
         <textarea
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           value={text}
           disabled={messageRedux.isLoadingMessageId === message.id}
         />
       ) : (
-        <p style={messageRedux.isLoadingMessageId === message.id ? { backgroundColor: 'red' } : {}}>
-          {message.text}
-        </p>
+        <p>{message.text}</p>
       )}
       {auth.isAuthenticated && auth.me.id === message.user.id && (
         <>
-          <button onClick={() => setIsEdit(oldIsEdit => !oldIsEdit)} type="button" className="btn">
-            {isEdit ? 'Cancel' : 'Edit'}
-          </button>
-          <button onClick={e => handleDeleteOrEdit(e, message.id)} type="button" className="btn">
-            {isEdit ? 'Submit' : 'Delete'}
-          </button>
+          {!isEdit ? (
+            <>
+              <button
+                onClick={() => setIsEdit((oldIsEdit) => !oldIsEdit)}
+                type="button"
+                className="btn"
+              >
+                Edit
+              </button>
+              <button
+                onClick={(e) => handleDeleteOrEdit(e, message.id)}
+                type="button"
+                className="btn"
+              >
+                Delete
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={(e) => handleDeleteOrEdit(e, message.id)}
+                type="button"
+                className="btn"
+              >
+                Submit
+              </button>
+              <button
+                onClick={() => setIsEdit((oldIsEdit) => !oldIsEdit)}
+                type="button"
+                className="btn"
+              >
+                Cancel
+              </button>
+            </>
+          )}
         </>
       )}
     </div>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   messageRedux: state.message,
 });
