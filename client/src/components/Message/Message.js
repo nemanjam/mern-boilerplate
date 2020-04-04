@@ -8,7 +8,7 @@ import './styles.css';
 
 const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [text, setText] = useState(message.text);
+  const [text, setText] = useState('');
 
   const handleDeleteOrEdit = (e, id) => {
     e.preventDefault();
@@ -44,7 +44,10 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
           {!isEdit ? (
             <>
               <button
-                onClick={() => setIsEdit((oldIsEdit) => !oldIsEdit)}
+                onClick={() => {
+                  setText(message.text);
+                  setIsEdit((oldIsEdit) => !oldIsEdit);
+                }}
                 type="button"
                 className="btn"
               >

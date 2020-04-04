@@ -20,7 +20,9 @@ const initialState = {
   isLoadingMessageId: null,
 };
 
-export default function(state = initialState, { type, payload }) {
+// You could have an array [{ id: 1, isLoading: false, error: null, text: "Hey" }, { id: 2, isLoading: true, error: null, text: null }]
+
+export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_MESSAGES_LOADING:
     case ADD_MESSAGE_LOADING:
@@ -51,13 +53,13 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         isLoadingMessageId: null,
-        messages: state.messages.filter(m => m.id !== payload.message.id),
+        messages: state.messages.filter((m) => m.id !== payload.message.id),
       };
     case EDIT_MESSAGE_SUCCESS:
       return {
         ...state,
         isLoadingMessageId: null,
-        messages: state.messages.map(m => {
+        messages: state.messages.map((m) => {
           if (m.id === payload.message.id) return payload.message;
           return m;
         }),
