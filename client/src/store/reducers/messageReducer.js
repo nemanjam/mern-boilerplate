@@ -17,7 +17,6 @@ const initialState = {
   messages: [],
   isLoading: false,
   error: null,
-  isLoadingMessageId: null,
 };
 
 // You could have an array [{ id: 1, isLoading: false, error: null, text: "Hey" }, { id: 2, isLoading: true, error: null, text: null }]
@@ -25,18 +24,34 @@ const initialState = {
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_MESSAGES_LOADING:
-    case ADD_MESSAGE_LOADING:
       return {
         ...state,
         isLoading: true,
+      };
+    case ADD_MESSAGE_LOADING:
+      return {
+        ...state,
+        messages: [
+          {
+            id: 0,
+            text: 'Loading...',
+            isLoading: true,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            user: { ...payload.me },
+          },
+          ...state.messages,
+        ],
       };
     case DELETE_MESSAGE_LOADING:
     case EDIT_MESSAGE_LOADING:
       return {
         ...state,
-        isLoadingMessageId: payload.id,
+        messages: state.messages.map((m) => {
+          if (m.id === payload.id) return { ...m, isLoading: true };
+          return m;
+        }),
       };
-
     case GET_MESSAGES_SUCCESS:
       return {
         ...state,
@@ -46,13 +61,14 @@ export default function (state = initialState, { type, payload }) {
     case ADD_MESSAGE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
-        messages: [payload.message, ...state.messages],
+        messages: state.messages.map((m) => {
+          if (m.id === 0) return payload.message;
+          return m;
+        }),
       };
     case DELETE_MESSAGE_SUCCESS:
       return {
         ...state,
-        isLoadingMessageId: null,
         messages: state.messages.filter((m) => m.id !== payload.message.id),
       };
     case EDIT_MESSAGE_SUCCESS:
@@ -64,15 +80,28 @@ export default function (state = initialState, { type, payload }) {
           return m;
         }),
       };
-    case GET_MESSAGES_FAIL:
-    case ADD_MESSAGE_FAIL:
     case DELETE_MESSAGE_FAIL:
     case EDIT_MESSAGE_FAIL:
       return {
         ...state,
+        error: null,
+        messages: state.messages.map((m) => {
+          if (m.id === payload.id) return { ...m, isLoading: false, error: payload };
+          return m;
+        }),
+      };
+    case GET_MESSAGES_FAIL:
+      return {
+        ...state,
         isLoading: false,
-        isLoadingMessageId: null,
         error: payload,
+      };
+    case ADD_MESSAGE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+        messages: state.messages.filter((m) => m.id !== 0),
       };
     default:
       return state;

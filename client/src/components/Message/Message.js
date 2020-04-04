@@ -21,7 +21,7 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
   };
 
   return (
-    <div className={messageRedux.isLoadingMessageId === message.id ? 'message active' : 'message'}>
+    <div className={message.isLoading ? 'message active' : 'message'}>
       <div className="message-header">
         <img src={message.user.avatar} className="avatar" />
         <div>
@@ -31,11 +31,7 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
         </div>
       </div>
       {isEdit ? (
-        <textarea
-          onChange={(e) => setText(e.target.value)}
-          value={text}
-          disabled={messageRedux.isLoadingMessageId === message.id}
-        />
+        <textarea onChange={(e) => setText(e.target.value)} value={text} disabled={false} />
       ) : (
         <p>{message.text}</p>
       )}

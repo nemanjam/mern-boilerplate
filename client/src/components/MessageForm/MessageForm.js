@@ -5,14 +5,16 @@ import { addMessage } from '../../store/actions/messageActions';
 
 import './styles.css';
 
-const MessageForm = ({ addMessage }) => {
+const MessageForm = ({ addMessage, message: { messages } }) => {
   const [text, setText] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     addMessage({ text });
     setText('');
   };
+
+  const isSubmiting = messages.some((m) => m.id === 0);
 
   return (
     <div className="message-form">
@@ -24,12 +26,17 @@ const MessageForm = ({ addMessage }) => {
           rows="5"
           placeholder="Write a message"
           value={text}
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
+          disabled={isSubmiting}
         />
-        <input type="submit" className="btn" value="Add Message" />
+        <input type="submit" className="btn" value="Add Message" disabled={isSubmiting} />
       </form>
     </div>
   );
 };
 
-export default connect(null, { addMessage })(MessageForm);
+const mapStateToProps = (state) => ({
+  message: state.message,
+});
+
+export default connect(mapStateToProps, { addMessage })(MessageForm);

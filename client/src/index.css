@@ -57,3 +57,8 @@ button[disabled] {
   color: #666666;
   cursor: not-allowed;
 }
+
+.active {
+  background-color: red;
+  /* transition: background-color 100ms linear; */
+}

@@ -37,9 +37,10 @@ export const getMessages = () => async (dispatch, getState) => {
   }
 };
 
-export const addMessage = formData => async (dispatch, getState) => {
+export const addMessage = (formData) => async (dispatch, getState) => {
   dispatch({
     type: ADD_MESSAGE_LOADING,
+    payload: { me: { ...getState().auth.me } },
   });
   try {
     const options = attachTokenToHeaders(getState);
@@ -57,7 +58,7 @@ export const addMessage = formData => async (dispatch, getState) => {
   }
 };
 
-export const deleteMessage = id => async (dispatch, getState) => {
+export const deleteMessage = (id) => async (dispatch, getState) => {
   dispatch({
     type: DELETE_MESSAGE_LOADING,
     payload: { id },
