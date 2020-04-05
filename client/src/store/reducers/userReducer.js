@@ -1,6 +1,7 @@
 import {
-  GET_FEATURE,
-  GET_PROFILE,
+  GET_PROFILE_LOADING,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_FAIL,
   GET_USERS_LOADING,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
@@ -8,7 +9,7 @@ import {
 
 const initialState = {
   users: [],
-  profile: {},
+  profile: null,
   isLoading: false,
   error: null,
 };
@@ -16,6 +17,7 @@ const initialState = {
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_USERS_LOADING:
+    case GET_PROFILE_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -27,17 +29,20 @@ export default function (state = initialState, { type, payload }) {
         isLoading: false,
         users: payload.users,
       };
+    case GET_PROFILE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        profile: payload.profile,
+      };
     case GET_USERS_FAIL:
+    case GET_PROFILE_FAIL:
       return {
         ...state,
         isLoading: false,
         users: [],
+        profile: null,
         error: payload,
-      };
-    case GET_PROFILE:
-      return {
-        ...state,
-        profile: payload,
       };
     default:
       return state;

@@ -2,27 +2,30 @@ import axios from 'axios';
 
 import { attachTokenToHeaders } from './authActions';
 import {
-  GET_FEATURE,
-  GET_PROFILE,
-  SET_ERROR,
+  GET_PROFILE_LOADING,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_FAIL,
   GET_USERS_LOADING,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
 } from '../types';
 
 export const getProfile = () => async (dispatch, getState) => {
+  dispatch({
+    type: GET_PROFILE_LOADING,
+  });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/users/me', options);
+    const response = await axios.get('/api/users/profile', options);
 
     dispatch({
-      type: GET_PROFILE,
-      payload: response.data.me,
+      type: GET_PROFILE_SUCCESS,
+      payload: { profile: response.data.profile },
     });
   } catch (err) {
     dispatch({
-      type: SET_ERROR,
-      payload: err.response.data,
+      type: GET_PROFILE_FAIL,
+      payload: err.message,
     });
   }
 };

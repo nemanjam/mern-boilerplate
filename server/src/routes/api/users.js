@@ -10,6 +10,11 @@ router.get('/me', requireJwtAuth, (req, res) => {
   res.json({ me });
 });
 
+router.get('/profile', requireJwtAuth, (req, res) => {
+  const profile = req.user.toJSON();
+  res.json({ profile });
+});
+
 router.get('/', requireJwtAuth, async (req, res) => {
   try {
     const users = await User.find().sort({ createdAt: 'desc' });
