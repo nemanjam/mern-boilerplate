@@ -1,34 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { useFormik } from 'formik';
 
 import { addMessage } from '../../store/actions/messageActions';
+import { messageFormSchema } from './validation';
 
 import './styles.css';
 
 const MessageForm = ({ addMessage, message: { messages } }) => {
-  const [text, setText] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addMessage({ text });
-    setText('');
-  };
+  const formik = useFormik({
+    initialValues: {
+      text: '',
+    },
+    validationSchema: messageFormSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      addMessage({ text: values.text });
+    },
+  });
 
   const isSubmiting = messages.some((m) => m.id === 0);
 
   return (
     <div className="message-form">
       <h2>Write a message</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <textarea
           name="text"
           cols="30"
           rows="5"
           placeholder="Write a message"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.text}
           disabled={isSubmiting}
         />
+        {formik.touched.text && formik.errors.text ? (
+          <p className="error">{formik.errors.text}</p>
+        ) : null}
         <input type="submit" className="btn" value="Add Message" disabled={isSubmiting} />
       </form>
     </div>
