@@ -3,7 +3,7 @@ import multer from 'multer';
 import { resolve } from 'path';
 
 import requireJwtAuth from '../../middleware/requireJwtAuth';
-import User from '../../models/User';
+import User, { hashPassword } from '../../models/User';
 
 const router = Router();
 
@@ -29,18 +29,29 @@ const upload = multer({
   },
 });
 
+//`checkit`, which is probably the option I'd suggest if  `validatem`
+
 router.put('/', [requireJwtAuth, upload.single('avatar')], async (req, res, next) => {
   try {
-    const url = req.protocol + '://' + req.get('host');
-    const avatarPath = `${url}/public/images/${req.file.filename}`;
-    console.log(avatarPath);
-    console.log(req.body);
+    let avatarPath = null;
+    if (req.file) {
+      const url = req.protocol + '://' + req.get('host');
+      avatarPath = `${url}/public/images/${req.file.filename}`;
+    }
 
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      { avatar: avatarPath, name: req.body.name, username: req.body.username },
-      { new: true },
-    );
+    let password = null;
+    if (req.body.password && req.body.password !== '') {
+      password = await hashPassword(req.body.password);
+    }
+
+    const updatedUser = { avatar: avatarPath, name: req.body.name, username: req.body.username, password };
+
+    // remove '', null, undefined
+    Object.keys(updatedUser).forEach((k) => !updatedUser[k] && updatedUser[k] !== undefined && delete updatedUser[k]);
+
+    console.log(req.body, updatedUser);
+
+    const user = await User.findByIdAndUpdate(req.user.id, updatedUser, { new: true });
 
     res.status(200).json({ user });
   } catch (err) {

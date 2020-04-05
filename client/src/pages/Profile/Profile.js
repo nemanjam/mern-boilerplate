@@ -46,16 +46,19 @@ const Profile = ({ getProfile, profile, isLoading, editUser }) => {
       console.log(values);
       const formData = new FormData();
       formData.append('avatar', avatar);
+      formData.append('name', values.name);
+      formData.append('username', values.username);
+      formData.append('password', values.password);
 
-      const json = JSON.stringify({
-        name: values.name,
-        username: values.username,
-        password: values.password,
-      });
-      const blob = new Blob([json], {
-        type: 'application/json',
-      });
-      formData.append('document', blob);
+      // const json = JSON.stringify({
+      //   name: values.name,
+      //   username: values.username,
+      //   password: values.password,
+      // });
+      // const blob = new Blob([json], {
+      //   type: 'application/json',
+      // });
+      // formData.append('document', blob);
 
       editUser(formData);
     },
