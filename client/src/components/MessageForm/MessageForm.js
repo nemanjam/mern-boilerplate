@@ -14,7 +14,6 @@ const MessageForm = ({ addMessage, message: { messages } }) => {
     },
     validationSchema: messageFormSchema,
     onSubmit: (values) => {
-      console.log(values);
       addMessage({ text: values.text });
     },
   });
