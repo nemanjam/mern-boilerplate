@@ -46,7 +46,7 @@ nav {
 .flex-1 {
   flex: 1;
 }
-.avatar {
+.navbar .avatar {
   width: 30px;
   height: 30px;
   align-self: center;

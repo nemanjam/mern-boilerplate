@@ -7,7 +7,7 @@ import { logOutUser } from '../../store/actions/authActions';
 import './styles.css';
 
 const Navbar = ({ auth, logOutUser, history }) => {
-  const onLogOut = event => {
+  const onLogOut = (event) => {
     event.preventDefault();
 
     logOutUser(() => {
@@ -25,7 +25,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
         {auth.isAuthenticated ? (
           <>
             <li className="nav-item">
-              <Link to="/feature">Feature</Link>
+              <Link to="/users">Users</Link>
             </li>
             <li className="nav-item">
               <Link to="/profile">Profile</Link>
@@ -50,7 +50,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   errors: state.errors,
 });

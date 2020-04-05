@@ -1,0 +1,28 @@
+.users .profile {
+  display: flex;
+  padding: 20px 0;
+  border-bottom: 1px solid black;
+}
+
+.users .avatar {
+  width: 120px;
+  height: 120px;
+  align-self: center;
+  margin-right: 20px;
+}
+
+.users .label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.users .info {
+  font-size: 18px;
+}
+
+.users .info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

@@ -53,7 +53,7 @@ const userSchema = new Schema(
   { timestamps: true },
 );
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   return {
     id: this._id,
     provider: this.provider,
@@ -61,10 +61,12 @@ userSchema.methods.toJSON = function() {
     username: this.username,
     avatar: this.avatar,
     name: this.name,
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
   };
 };
 
-userSchema.methods.generateJWT = function() {
+userSchema.methods.generateJWT = function () {
   const token = jwt.sign(
     {
       expiresIn: '12h',
@@ -90,7 +92,7 @@ userSchema.methods.registerUser = (newUser, callback) => {
   });
 };
 
-userSchema.methods.comparePassword = function(candidatePassword, callback) {
+userSchema.methods.comparePassword = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) return callback(err);
     callback(null, isMatch);

@@ -8,7 +8,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
-import Feature from './pages/Feature/Feature';
+import Users from './pages/Users/Users';
 
 import { logInUserWithOauth, loadMe } from './store/actions/authActions';
 
@@ -34,13 +34,13 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />
-      <Route path="/feature" component={Feature} />
+      <Route path="/users" component={Users} />
       <Route exact path="/" component={Home} />
     </Switch>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   errors: state.errors,
 });
