@@ -29,12 +29,18 @@ const upload = multer({
   },
 });
 
-router.post('/', [requireJwtAuth, upload.single('avatar')], async (req, res, next) => {
+router.put('/', [requireJwtAuth, upload.single('avatar')], async (req, res, next) => {
   try {
     const url = req.protocol + '://' + req.get('host');
     const avatarPath = `${url}/public/images/${req.file.filename}`;
     console.log(avatarPath);
-    const user = await User.findByIdAndUpdate(req.user.id, { avatar: avatarPath }, { new: true });
+    console.log(req.body);
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { avatar: avatarPath, name: req.body.name, username: req.body.username },
+      { new: true },
+    );
 
     res.status(200).json({ user });
   } catch (err) {

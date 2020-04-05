@@ -19,7 +19,7 @@ export const editUser = (formData) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.post('/api/users', formData, options);
+    const response = await axios.put('/api/users', formData, options);
 
     dispatch({
       type: EDIT_USER_SUCCESS,

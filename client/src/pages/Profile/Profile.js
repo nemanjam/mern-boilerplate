@@ -46,6 +46,17 @@ const Profile = ({ getProfile, profile, isLoading, editUser }) => {
       console.log(values);
       const formData = new FormData();
       formData.append('avatar', avatar);
+
+      const json = JSON.stringify({
+        name: values.name,
+        username: values.username,
+        password: values.password,
+      });
+      const blob = new Blob([json], {
+        type: 'application/json',
+      });
+      formData.append('document', blob);
+
       editUser(formData);
     },
   });
