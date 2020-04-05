@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import moment from 'moment';
 
-import { getProfile } from '../../store/actions/userActions';
+import { getProfile, editUser } from '../../store/actions/userActions';
 import Layout from '../../layout/Layout';
 import requireAuth from '../../hoc/requireAuth';
 import { profileSchema } from './validation';
 
 import './styles.css';
 
-const Profile = ({ getProfile, profile, isLoading }) => {
+const Profile = ({ getProfile, profile, isLoading, editUser }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     getProfile();
@@ -22,11 +23,13 @@ const Profile = ({ getProfile, profile, isLoading }) => {
   const onChange = (event) => {
     formik.setFieldValue('image', event.currentTarget.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
+    setAvatar(event.target.files[0]);
   };
 
   const handleClickEdit = () => {
     setIsEdit((oldIsEdit) => !oldIsEdit);
     setImage(null);
+    setAvatar(null);
     formik.setFieldValue('name', profile.name);
     formik.setFieldValue('username', profile.username);
   };
@@ -41,6 +44,9 @@ const Profile = ({ getProfile, profile, isLoading }) => {
     validationSchema: profileSchema,
     onSubmit: (values) => {
       console.log(values);
+      const formData = new FormData();
+      formData.append('avatar', avatar);
+      editUser(formData);
     },
   });
 
@@ -92,7 +98,14 @@ const Profile = ({ getProfile, profile, isLoading }) => {
                 <label>Avatar:</label>
                 <input name="image" type="file" onChange={onChange} />
                 {image && (
-                  <button className="btn" onClick={() => setImage(null)} type="button">
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      setImage(null);
+                      setAvatar(null);
+                    }}
+                    type="button"
+                  >
                     Remove Image
                   </button>
                 )}
@@ -160,4 +173,4 @@ const mapStateToProps = (state) => ({
   profile: state.user.profile,
 });
 
-export default compose(requireAuth, connect(mapStateToProps, { getProfile }))(Profile);
+export default compose(requireAuth, connect(mapStateToProps, { getProfile, editUser }))(Profile);

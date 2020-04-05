@@ -8,7 +8,30 @@ import {
   GET_USERS_LOADING,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
+  EDIT_USER_LOADING,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAIL,
 } from '../types';
+
+export const editUser = (formData) => async (dispatch, getState) => {
+  dispatch({
+    type: EDIT_USER_LOADING,
+  });
+  try {
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.post('/api/users', formData, options);
+
+    dispatch({
+      type: EDIT_USER_SUCCESS,
+      payload: { user: response.data.user },
+    });
+  } catch (err) {
+    dispatch({
+      type: EDIT_USER_FAIL,
+      payload: err.message,
+    });
+  }
+};
 
 export const getProfile = () => async (dispatch, getState) => {
   dispatch({

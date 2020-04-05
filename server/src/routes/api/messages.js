@@ -6,12 +6,10 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const messages = await Message.find()
-      .sort({ createdAt: 'desc' })
-      .populate('user');
+    const messages = await Message.find().sort({ createdAt: 'desc' }).populate('user');
 
     res.json({
-      messages: messages.map(m => {
+      messages: messages.map((m) => {
         return m.toJSON();
       }),
     });
@@ -72,7 +70,6 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
 
     res.status(200).json({ message });
   } catch (err) {
-    console.log(err);
     res.status(500).json('Something went wrong.');
   }
 });

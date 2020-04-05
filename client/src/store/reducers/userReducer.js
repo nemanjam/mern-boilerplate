@@ -5,6 +5,9 @@ import {
   GET_USERS_LOADING,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
+  EDIT_USER_LOADING,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAIL,
 } from '../types';
 
 const initialState = {
@@ -18,6 +21,7 @@ export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_USERS_LOADING:
     case GET_PROFILE_LOADING:
+    case EDIT_USER_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -35,8 +39,15 @@ export default function (state = initialState, { type, payload }) {
         isLoading: false,
         profile: payload.profile,
       };
+    case EDIT_USER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        profile: payload.user,
+      };
     case GET_USERS_FAIL:
     case GET_PROFILE_FAIL:
+    case EDIT_USER_FAIL:
       return {
         ...state,
         isLoading: false,

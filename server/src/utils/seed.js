@@ -3,7 +3,7 @@ import User from '../models/User';
 import Message from '../models/Message';
 
 export const seedDb = async () => {
-  console.log('seeding database...');
+  console.log('Seeding database...');
 
   await User.deleteMany({});
   await Message.deleteMany({});
@@ -29,7 +29,7 @@ export const seedDb = async () => {
   });
 
   await Promise.all(
-    usersPromises.map(async user => {
+    usersPromises.map(async (user) => {
       await user.save();
     }),
   );
@@ -43,7 +43,7 @@ export const seedDb = async () => {
   });
 
   await Promise.all(
-    messagePromises.map(async message => {
+    messagePromises.map(async (message) => {
       await message.save();
     }),
   );
@@ -53,7 +53,7 @@ export const seedDb = async () => {
 
   // every user 3 messages
   users.map(async (user, index) => {
-    const threeMessagesIds = messages.slice(index * 3, index * 3 + 3).map(m => m.id);
+    const threeMessagesIds = messages.slice(index * 3, index * 3 + 3).map((m) => m.id);
     await User.updateOne({ _id: user.id }, { $push: { messages: threeMessagesIds } });
   });
 

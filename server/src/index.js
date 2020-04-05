@@ -3,8 +3,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import https from 'https';
 import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import passport from 'passport';
+import all_routes from 'express-list-endpoints';
 
 import routes from './routes';
 import { seedDb } from './utils/seed';
@@ -38,11 +39,11 @@ mongoose
     console.log('MongoDB Connected...');
     seedDb();
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 // Use Routes
 app.use('/', routes);
-app.use('/static', express.static(__dirname + '/static'));
+app.use('/public', express.static(join(__dirname, '../public')));
 
 // Serve static assets if in production
 if (isProduction) {
@@ -65,5 +66,6 @@ if (isProduction) {
 
   const server = https.createServer(httpsOptions, app).listen(port, () => {
     console.log('https server running at ' + port);
+    // console.log(all_routes(app));
   });
 }
