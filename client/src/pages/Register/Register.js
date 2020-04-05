@@ -1,5 +1,5 @@
-import React, { useState, Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React from 'react';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -20,7 +20,7 @@ const Register = ({ auth, history, registerUserWithEmail }) => {
       password: '',
     },
     validationSchema: registerSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       registerUserWithEmail(
         values,
         () => {
@@ -30,6 +30,8 @@ const Register = ({ auth, history, registerUserWithEmail }) => {
       );
     },
   });
+
+  if (auth.isAuthenticated) return <Redirect to="/" />;
 
   return (
     <div className="register">
@@ -115,7 +117,7 @@ const Register = ({ auth, history, registerUserWithEmail }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 

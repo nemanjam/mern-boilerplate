@@ -31,9 +31,10 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
       id: message.id,
     },
     validationSchema: messageFormSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       editMessage(values.id, { text: values.text });
       setIsEdit(false);
+      resetForm();
     },
   });
 

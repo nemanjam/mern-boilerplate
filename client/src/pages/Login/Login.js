@@ -1,5 +1,5 @@
-import React, { useState, Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React from 'react';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 
 import { useFormik } from 'formik';
 
@@ -19,7 +19,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
       password: '',
     },
     validationSchema: loginSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       loginUserWithEmail(
         values,
         () => {
@@ -29,6 +29,8 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
       );
     },
   });
+
+  if (auth.isAuthenticated) return <Redirect to="/" />;
 
   return (
     <div className="login">
@@ -98,7 +100,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   errors: state.errors,
 });

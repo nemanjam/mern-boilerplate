@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Joi from 'joi';
+import faker from 'faker';
 
 import User from '../models/User';
 import requireLocalAuth from '../middleware/requireLocalAuth';
@@ -36,6 +37,7 @@ router.post('/register', async (req, res, next) => {
         password,
         username,
         name,
+        avatar: faker.image.avatar(),
       });
 
       newUser.registerUser(newUser, (err, user) => {
