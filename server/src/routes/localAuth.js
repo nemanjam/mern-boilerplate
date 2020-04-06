@@ -15,13 +15,12 @@ router.post('/login', requireLocalAuth, (req, res) => {
 });
 
 router.post('/register', async (req, res, next) => {
-  let form;
-  try {
-    form = await Joi.validate(req.body, registerSchema);
-  } catch (err) {
-    return res.status(422).send({ message: err.details[0].message });
+  const { error } = Joi.validate(req.body, registerSchema);
+  if (error) {
+    return res.status(422).send({ message: error.details[0].message });
   }
-  const { email, password, name, username } = form;
+
+  const { email, password, name, username } = req.body;
 
   try {
     const existingUser = await User.findOne({ email: email });

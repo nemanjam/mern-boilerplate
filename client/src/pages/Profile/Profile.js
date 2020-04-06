@@ -21,6 +21,7 @@ import './styles.css';
 // mongo atlas i heroku deploy package json i promenljive env i config
 // avatar staza u bazu samo fajl
 // gitignore za placeholder avatar
+// delete profile ruta
 
 const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -58,7 +59,9 @@ const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
       formData.append('avatar', avatar);
       formData.append('name', values.name);
       formData.append('username', values.username);
-      formData.append('password', values.password);
+      if (profile.provider === 'email') {
+        formData.append('password', values.password);
+      }
       editUser(formData);
       setIsEdit(false);
     },
@@ -156,21 +159,23 @@ const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
                   <p className="error">{formik.errors.username}</p>
                 ) : null}
               </div>
-              <div className="input-div">
-                <label>Password:</label>
-                <input
-                  placeholder="Password"
-                  name="password"
-                  className=""
-                  type="password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                />
-                {formik.touched.password && formik.errors.password ? (
-                  <p className="error">{formik.errors.password}</p>
-                ) : null}
-              </div>
+              {profile.provider === 'email' && (
+                <div className="input-div">
+                  <label>Password:</label>
+                  <input
+                    placeholder="Password"
+                    name="password"
+                    className=""
+                    type="password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                  />
+                  {formik.touched.password && formik.errors.password ? (
+                    <p className="error">{formik.errors.password}</p>
+                  ) : null}
+                </div>
+              )}
               <button type="submit" className="btn">
                 Save
               </button>

@@ -56,7 +56,7 @@ router.put('/', [requireJwtAuth, upload.single('avatar')], async (req, res, next
 
     res.status(200).json({ user });
   } catch (err) {
-    res.status(500).json('Something went wrong.');
+    res.status(500).json({ message: 'Something went wrong.' });
   }
 });
 
@@ -80,14 +80,8 @@ router.get('/', requireJwtAuth, async (req, res) => {
       }),
     });
   } catch (err) {
-    res.status(500).json('Something went wrong.');
+    res.status(500).json({ message: 'Something went wrong.' });
   }
-});
-
-router.get('/feature', requireJwtAuth, (req, res) => {
-  res.json({
-    feature: 'This is a feature. Only authenticated users can see this.',
-  });
 });
 
 export default router;

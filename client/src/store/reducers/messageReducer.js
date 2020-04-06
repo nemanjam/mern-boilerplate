@@ -85,7 +85,7 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         error: null,
         messages: state.messages.map((m) => {
-          if (m.id === payload.id) return { ...m, isLoading: false, error: payload };
+          if (m.id === payload.id) return { ...m, isLoading: false, error: payload.error };
           return m;
         }),
       };
@@ -93,13 +93,13 @@ export default function (state = initialState, { type, payload }) {
       return {
         ...state,
         isLoading: false,
-        error: payload,
+        error: payload.error,
       };
     case ADD_MESSAGE_FAIL:
       return {
         ...state,
         isLoading: false,
-        error: payload,
+        error: payload.error,
         messages: state.messages.filter((m) => m.id !== 0),
       };
     default:

@@ -9,7 +9,7 @@ const Footer = () => {
         <span className="username">@nemanjam 2020</span>
         {/* Place this tag where you want the button to render. */}
         <a
-          class="github-button"
+          className="github-button"
           href="https://github.com/nemanjam/mern-boilerplate"
           data-icon="octicon-star"
           data-size="large"

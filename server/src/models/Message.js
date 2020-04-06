@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Joi from 'joi';
 const { Schema } = mongoose;
 
 const messageSchema = new Schema(
@@ -12,7 +13,7 @@ const messageSchema = new Schema(
   { timestamps: true },
 );
 
-messageSchema.methods.toJSON = function() {
+messageSchema.methods.toJSON = function () {
   return {
     id: this._id,
     text: this.text,
@@ -20,6 +21,13 @@ messageSchema.methods.toJSON = function() {
     updatedAt: this.updatedAt,
     user: this.user.toJSON(),
   };
+};
+
+export const validateMessage = (message) => {
+  const schema = {
+    text: Joi.string().min(15).max(150).required(),
+  };
+  return Joi.validate(message, schema);
 };
 
 const Message = mongoose.model('Message', messageSchema);
