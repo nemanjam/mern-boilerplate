@@ -1,14 +1,16 @@
 import React from 'react';
-import Navbar from '../components/Navbar/Navbar';
-
 import PropTypes from 'prop-types';
+
+import Navbar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer/Footer';
 import './styles.css';
 
 const Layout = ({ children }) => {
   return (
     <>
       <Navbar />
-      <div className="content">{children}</div>
+      <div className="container">{children}</div>
+      <Footer />
     </>
   );
 };

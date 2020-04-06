@@ -1,4 +1,7 @@
-.content {
-  width: 80%;
+.container {
+  width: 85%;
   margin: 0 auto;
+  border: 1px solid green;
+  padding: 0 1rem 1rem 1rem;
+  min-height: calc(100% - 100px);
 }

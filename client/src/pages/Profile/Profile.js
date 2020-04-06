@@ -11,7 +11,7 @@ import { profileSchema } from './validation';
 
 import './styles.css';
 
-const Profile = ({ getProfile, profile, isLoading, editUser }) => {
+const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);
   const [avatar, setAvatar] = useState(null);
@@ -43,53 +43,51 @@ const Profile = ({ getProfile, profile, isLoading, editUser }) => {
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
-      console.log(values);
       const formData = new FormData();
       formData.append('avatar', avatar);
       formData.append('name', values.name);
       formData.append('username', values.username);
       formData.append('password', values.password);
       editUser(formData);
+      setIsEdit(false);
     },
   });
 
-  if (isLoading || !profile) return 'Loading...';
+  if (!profile) return 'Loading...';
 
   return (
     <Layout>
       <div className="profile">
         <h1>Profile page</h1>
-        <div className="profile">
-          <div className="profile-info">
-            <img src={image ? image : profile.avatar} className="avatar" />
-            <div className="info-container">
-              <div>
-                <span className="label">Provider: </span>
-                <span className="info">{profile.provider}</span>
-              </div>
-              <div>
-                <span className="label">Name: </span>
-                <span className="info">{profile.name}</span>
-              </div>
-              <div>
-                <span className="label">Username: </span>
-                <span className="info">{profile.username}</span>
-              </div>
-              <div>
-                <span className="label">Email: </span>
-                <span className="info">{profile.email}</span>
-              </div>
-              <div>
-                <span className="label">Joined: </span>
-                <span className="info">
-                  {moment(profile.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
-                </span>
-              </div>
-              <div>
-                <button className="btn" type="button" onClick={handleClickEdit}>
-                  {isEdit ? 'Cancel' : 'Edit'}
-                </button>
-              </div>
+        <div className={isLoading ? 'profile-info active' : 'profile-info'}>
+          <img src={image ? image : profile.avatar} className="avatar" />
+          <div className="info-container">
+            <div>
+              <span className="label">Provider: </span>
+              <span className="info">{profile.provider}</span>
+            </div>
+            <div>
+              <span className="label">Name: </span>
+              <span className="info">{profile.name}</span>
+            </div>
+            <div>
+              <span className="label">Username: </span>
+              <span className="info">{profile.username}</span>
+            </div>
+            <div>
+              <span className="label">Email: </span>
+              <span className="info">{profile.email}</span>
+            </div>
+            <div>
+              <span className="label">Joined: </span>
+              <span className="info">
+                {moment(profile.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
+              </span>
+            </div>
+            <div>
+              <button className="btn" type="button" onClick={handleClickEdit}>
+                {isEdit ? 'Cancel' : 'Edit'}
+              </button>
             </div>
           </div>
         </div>
@@ -173,7 +171,7 @@ const Profile = ({ getProfile, profile, isLoading, editUser }) => {
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.user.profile,
+  user: state.user,
 });
 
 export default compose(requireAuth, connect(mapStateToProps, { getProfile, editUser }))(Profile);
