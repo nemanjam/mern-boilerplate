@@ -11,18 +11,20 @@ const MessageList = ({ getMessages, message: { messages, isLoading, error } }) =
   }, []);
 
   return (
-    <div>
+    <div className="message-list">
       <h2>Messages:</h2>
-      {isLoading
-        ? 'Loading...'
-        : messages.map((message, index) => {
-            return <Message key={index} message={message} />;
-          })}
+      <div className="list">
+        {isLoading
+          ? 'Loading...'
+          : messages.map((message, index) => {
+              return <Message key={index} message={message} />;
+            })}
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   message: state.message,
 });
 

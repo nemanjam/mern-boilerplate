@@ -39,6 +39,7 @@ router.put('/', [requireJwtAuth, upload.single('avatar')], async (req, res, next
       avatarPath = `${url}/public/images/${req.file.filename}`;
     }
 
+    // if fb or google user provider dont update password
     let password = null;
     if (req.body.password && req.body.password !== '') {
       password = await hashPassword(req.body.password);
@@ -49,7 +50,7 @@ router.put('/', [requireJwtAuth, upload.single('avatar')], async (req, res, next
     // remove '', null, undefined
     Object.keys(updatedUser).forEach((k) => !updatedUser[k] && updatedUser[k] !== undefined && delete updatedUser[k]);
 
-    console.log(req.body, updatedUser);
+    // console.log(req.body, updatedUser);
 
     const user = await User.findByIdAndUpdate(req.user.id, updatedUser, { new: true });
 

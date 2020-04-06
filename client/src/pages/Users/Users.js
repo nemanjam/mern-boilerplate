@@ -3,13 +3,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { getUsers } from '../../store/actions/userActions';
+import { getUsers } from '../../store/actions/usersActions';
 import Layout from '../../layout/Layout';
 import requireAuth from '../../hoc/requireAuth';
 
 import './styles.css';
 
-const Feature = ({ getUsers, user: { users } }) => {
+const Feature = ({ getUsers, users: { users } }) => {
   useEffect(() => {
     getUsers();
   }, []);
@@ -55,7 +55,7 @@ const Feature = ({ getUsers, user: { users } }) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  users: state.users,
 });
 
 export default compose(requireAuth, connect(mapStateToProps, { getUsers }))(Feature);
