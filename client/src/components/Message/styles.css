@@ -12,6 +12,9 @@
   border-bottom: 1px solid black;
   padding: 20px 0;
 }
+.message:last-child {
+  border-bottom: 0;
+}
 
 .message .avatar {
   width: 70px;

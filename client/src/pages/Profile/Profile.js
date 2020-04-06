@@ -12,6 +12,16 @@ import { profileSchema } from './validation';
 
 import './styles.css';
 
+// nema password za oauth usere ni na klijentu ni serveru
+// validacija na serveru i error handilng na clientu
+// css i html
+// delete user i logika da ne brise seedovane
+// admin ruta i hoc
+// error handling login register posto je zajednicki loading i error
+// mongo atlas i heroku deploy package json i promenljive env i config
+// avatar staza u bazu samo fajl
+// gitignore za placeholder avatar
+
 const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);

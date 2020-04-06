@@ -10,7 +10,7 @@ import requireAuth from '../../hoc/requireAuth';
 
 import './styles.css';
 
-const Feature = ({ getUsers, users: { users, isLoading } }) => {
+const Users = ({ getUsers, users: { users, isLoading } }) => {
   useEffect(() => {
     getUsers();
   }, []);
@@ -67,4 +67,4 @@ const mapStateToProps = (state) => ({
   users: state.users,
 });
 
-export default compose(requireAuth, connect(mapStateToProps, { getUsers }))(Feature);
+export default compose(requireAuth, connect(mapStateToProps, { getUsers }))(Users);

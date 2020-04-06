@@ -6,6 +6,9 @@
   padding: 20px 0;
   border-bottom: 1px solid black;
 }
+.users .profile:last-child {
+  border-bottom: 0;
+}
 
 .users .avatar {
   width: 120px;
