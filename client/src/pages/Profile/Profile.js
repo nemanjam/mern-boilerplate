@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import { getProfile, editUser } from '../../store/actions/userActions';
 import Layout from '../../layout/Layout';
+import Loader from '../../components/Loader/Loader';
 import requireAuth from '../../hoc/requireAuth';
 import { profileSchema } from './validation';
 
@@ -59,38 +60,42 @@ const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
     <Layout>
       <div className="profile">
         <h1>Profile page</h1>
-        <div className={isLoading ? 'profile-info active' : 'profile-info'}>
-          <img src={image ? image : profile.avatar} className="avatar" />
-          <div className="info-container">
-            <div>
-              <span className="label">Provider: </span>
-              <span className="info">{profile.provider}</span>
-            </div>
-            <div>
-              <span className="label">Name: </span>
-              <span className="info">{profile.name}</span>
-            </div>
-            <div>
-              <span className="label">Username: </span>
-              <span className="info">{profile.username}</span>
-            </div>
-            <div>
-              <span className="label">Email: </span>
-              <span className="info">{profile.email}</span>
-            </div>
-            <div>
-              <span className="label">Joined: </span>
-              <span className="info">
-                {moment(profile.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
-              </span>
-            </div>
-            <div>
-              <button className="btn" type="button" onClick={handleClickEdit}>
-                {isEdit ? 'Cancel' : 'Edit'}
-              </button>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="profile-info">
+            <img src={image ? image : profile.avatar} className="avatar" />
+            <div className="info-container">
+              <div>
+                <span className="label">Provider: </span>
+                <span className="info">{profile.provider}</span>
+              </div>
+              <div>
+                <span className="label">Name: </span>
+                <span className="info">{profile.name}</span>
+              </div>
+              <div>
+                <span className="label">Username: </span>
+                <span className="info">{profile.username}</span>
+              </div>
+              <div>
+                <span className="label">Email: </span>
+                <span className="info">{profile.email}</span>
+              </div>
+              <div>
+                <span className="label">Joined: </span>
+                <span className="info">
+                  {moment(profile.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
+                </span>
+              </div>
+              <div>
+                <button className="btn" type="button" onClick={handleClickEdit}>
+                  {isEdit ? 'Cancel' : 'Edit'}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {isEdit && (
           <div className="form">

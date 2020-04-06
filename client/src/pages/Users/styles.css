@@ -1,3 +1,6 @@
+.users {
+  min-height: 100%;
+}
 .users .profile {
   display: flex;
   padding: 20px 0;
@@ -28,4 +31,5 @@
 }
 
 .users .list {
+  min-height: 100%;
 }

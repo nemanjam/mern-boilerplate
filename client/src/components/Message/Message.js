@@ -39,7 +39,7 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
   });
 
   return (
-    <div className={message.isLoading ? 'message active' : 'message'}>
+    <div className={message.isLoading ? 'message loader' : 'message'}>
       <div className="message-header">
         <img src={message.user.avatar} className="avatar" />
         <div>

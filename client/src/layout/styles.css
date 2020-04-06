@@ -1,7 +1,6 @@
 .container {
-  width: 85%;
+  width: 80%;
   margin: 0 auto;
-  border: 1px solid green;
-  padding: 0 1rem 1rem 1rem;
-  min-height: calc(100% - 100px);
+  /* border: 1px solid green; */
+  min-height: calc(100% - 131px);
 }

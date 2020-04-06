@@ -65,3 +65,8 @@ button[disabled] {
   background-color: red;
   /* transition: background-color 100ms linear; */
 }
+
+.loader {
+  background-color: #0f0;
+  color: black;
+}

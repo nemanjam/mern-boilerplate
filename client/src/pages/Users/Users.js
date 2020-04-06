@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { getUsers } from '../../store/actions/usersActions';
 import Layout from '../../layout/Layout';
+import Loader from '../../components/Loader/Loader';
 import requireAuth from '../../hoc/requireAuth';
 
 import './styles.css';
@@ -18,38 +19,44 @@ const Feature = ({ getUsers, users: { users, isLoading } }) => {
     <Layout>
       <div className="users">
         <h1>Users page</h1>
-        <div className={isLoading ? 'list active' : 'list'}>
-          {users.map((user, index) => {
-            return (
-              <div key={index} className="profile">
-                <img src={user.avatar} className="avatar" />
-                <div className="info-container">
-                  <div>
-                    <span className="label">Provider: </span>
-                    <span className="info">{user.provider}</span>
+        <div className="list">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {users.map((user, index) => {
+                return (
+                  <div key={index} className="profile">
+                    <img src={user.avatar} className="avatar" />
+                    <div className="info-container">
+                      <div>
+                        <span className="label">Provider: </span>
+                        <span className="info">{user.provider}</span>
+                      </div>
+                      <div>
+                        <span className="label">Name: </span>
+                        <span className="info">{user.name}</span>
+                      </div>
+                      <div>
+                        <span className="label">Username: </span>
+                        <span className="info">{user.username}</span>
+                      </div>
+                      <div>
+                        <span className="label">Email: </span>
+                        <span className="info">{user.email}</span>
+                      </div>
+                      <div>
+                        <span className="label">Joined: </span>
+                        <span className="info">
+                          {moment(user.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span className="label">Name: </span>
-                    <span className="info">{user.name}</span>
-                  </div>
-                  <div>
-                    <span className="label">Username: </span>
-                    <span className="info">{user.username}</span>
-                  </div>
-                  <div>
-                    <span className="label">Email: </span>
-                    <span className="info">{user.email}</span>
-                  </div>
-                  <div>
-                    <span className="label">Joined: </span>
-                    <span className="info">
-                      {moment(user.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
     </Layout>

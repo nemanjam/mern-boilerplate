@@ -17,7 +17,7 @@ const MessageList = ({ getMessages, message: { messages, isLoading, error } }) =
       <h2>Messages:</h2>
       <div className="list">
         {isLoading ? (
-          <Loader style={{ height: 500 }} />
+          <Loader />
         ) : (
           <>
             {messages.map((message, index) => {
