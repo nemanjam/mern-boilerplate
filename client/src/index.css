@@ -53,6 +53,12 @@ textarea:hover,
   margin: 0;
 }
 
+.error-center {
+  color: red;
+  margin: 0;
+  text-align: center;
+}
+
 button:disabled,
 button[disabled] {
   border: 1px solid #999999;

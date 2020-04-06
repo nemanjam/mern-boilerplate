@@ -25,7 +25,7 @@ messageSchema.methods.toJSON = function () {
 
 export const validateMessage = (message) => {
   const schema = {
-    text: Joi.string().min(15).max(150).required(),
+    text: Joi.string().min(5).max(300).required(),
   };
   return Joi.validate(message, schema);
 };

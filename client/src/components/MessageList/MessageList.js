@@ -15,6 +15,7 @@ const MessageList = ({ getMessages, message: { messages, isLoading, error } }) =
   return (
     <div className="message-list">
       <h2>Messages:</h2>
+      {error && <div className="error-center">{error}</div>}
       <div className="list">
         {isLoading ? (
           <Loader />
