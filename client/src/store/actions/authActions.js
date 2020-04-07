@@ -73,7 +73,7 @@ export const loginUserWithEmail = (formData, cb, cbErr) => async (dispatch, getS
   }
 };
 
-export const logInUserWithOauth = token => async (dispatch, getState) => {
+export const logInUserWithOauth = (token) => async (dispatch, getState) => {
   dispatch({ type: LOGIN_WITH_OAUTH_LOADING });
 
   try {
@@ -97,18 +97,17 @@ export const logInUserWithOauth = token => async (dispatch, getState) => {
 };
 
 // Log user out
-export const logOutUser = cb => async dispatch => {
+export const logOutUser = (history) => async (dispatch) => {
   try {
     deleteAllCookies();
+    //just to log user logut on the server
     await axios.get('/auth/logout');
 
     dispatch({
       type: LOGOUT_SUCCESS,
     });
-    cb();
-  } catch (err) {
-    cb();
-  }
+    history.push('/');
+  } catch (err) {}
 };
 
 function deleteAllCookies() {
@@ -122,7 +121,7 @@ function deleteAllCookies() {
   }
 }
 
-export const attachTokenToHeaders = getState => {
+export const attachTokenToHeaders = (getState) => {
   const token = getState().auth.token;
 
   const config = {

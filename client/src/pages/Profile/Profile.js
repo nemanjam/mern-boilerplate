@@ -3,8 +3,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import moment from 'moment';
+import { withRouter } from 'react-router-dom';
 
-import { getProfile, editUser } from '../../store/actions/userActions';
+import { getProfile, editUser, deleteUser } from '../../store/actions/userActions';
 import Layout from '../../layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import requireAuth from '../../hoc/requireAuth';
@@ -23,7 +24,13 @@ import './styles.css';
 // gitignore za placeholder avatar
 // delete profile ruta
 
-const Profile = ({ getProfile, user: { profile, isLoading, error }, editUser }) => {
+const Profile = ({
+  getProfile,
+  user: { profile, isLoading, error },
+  editUser,
+  deleteUser,
+  history,
+}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);
   const [avatar, setAvatar] = useState(null);
@@ -54,6 +61,10 @@ const Profile = ({ getProfile, user: { profile, isLoading, error }, editUser }) 
     setAvatar(null);
     formik.setFieldValue('name', profile.name);
     formik.setFieldValue('username', profile.username);
+  };
+
+  const handleDeleteUser = (id, history) => {
+    deleteUser(id, history);
   };
 
   const formik = useFormik({
@@ -189,7 +200,11 @@ const Profile = ({ getProfile, user: { profile, isLoading, error }, editUser }) 
               <button type="submit" className="btn">
                 Save
               </button>
-              <button type="button" className="btn">
+              <button
+                onClick={() => handleDeleteUser(profile.id, history)}
+                type="button"
+                className="btn"
+              >
                 Delete profile
               </button>
             </form>
@@ -204,4 +219,8 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default compose(requireAuth, connect(mapStateToProps, { getProfile, editUser }))(Profile);
+export default compose(
+  requireAuth,
+  withRouter,
+  connect(mapStateToProps, { getProfile, editUser, deleteUser }),
+)(Profile);

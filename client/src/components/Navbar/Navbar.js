@@ -10,9 +10,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
   const onLogOut = (event) => {
     event.preventDefault();
 
-    logOutUser(() => {
-      history.push('/');
-    });
+    logOutUser(history);
   };
 
   return (
