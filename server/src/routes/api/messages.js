@@ -59,6 +59,9 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
 });
 
 router.put('/:id', requireJwtAuth, async (req, res) => {
+  const { error } = validateMessage(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
   try {
     const tempMessage = await Message.findById(req.params.id).populate('user');
     if (tempMessage.user.id !== req.user.id) return res.status(400).json({ message: 'Not the message owner.' });

@@ -14,6 +14,7 @@ import {
   EDIT_MESSAGE_LOADING,
   EDIT_MESSAGE_SUCCESS,
   EDIT_MESSAGE_FAIL,
+  CLEAR_MESSAGE_ERROR,
 } from '../types';
 
 export const getMessages = () => async (dispatch, getState) => {
@@ -94,7 +95,12 @@ export const editMessage = (id, formData) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: EDIT_MESSAGE_FAIL,
-      payload: { error: err?.response?.data.message || err.message },
+      payload: { error: err?.response?.data.message || err.message, id },
     });
   }
 };
+
+export const clearMessageError = (id) => ({
+  type: CLEAR_MESSAGE_ERROR,
+  payload: { id },
+});

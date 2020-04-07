@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { useFormik } from 'formik';
 
-import { deleteMessage, editMessage } from '../../store/actions/messageActions';
+import { deleteMessage, editMessage, clearMessageError } from '../../store/actions/messageActions';
 import { messageFormSchema } from './validation';
 
 import './styles.css';
 
-const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) => {
+const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleDelete = (e, id) => {
@@ -34,9 +34,19 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
     onSubmit: (values, { resetForm }) => {
       editMessage(values.id, { text: values.text });
       setIsEdit(false);
-      resetForm();
+      // resetForm();
     },
   });
+
+  // dont reset form if there is an error
+  useEffect(() => {
+    if (!message.error && !message.isLoading) formik.resetForm();
+  }, [message.error, message.isLoading]);
+
+  // keep edit open if there is an error
+  useEffect(() => {
+    if (message.error) setIsEdit(true);
+  }, [message.error]);
 
   return (
     <div className={message.isLoading ? 'message loader' : 'message'}>
@@ -65,8 +75,8 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
               disabled={message.isLoading}
             />
             <input type="hidden" name="id" />
-            {formik.touched.text && formik.errors.text ? (
-              <p className="error">{formik.errors.text}</p>
+            {(formik.touched.text && formik.errors.text) || message.error ? (
+              <p className="error">{formik.errors.text || message.error}</p>
             ) : null}
           </>
         ) : (
@@ -89,7 +99,10 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
                   Submit
                 </button>
                 <button
-                  onClick={() => setIsEdit((oldIsEdit) => !oldIsEdit)}
+                  onClick={() => {
+                    setIsEdit((oldIsEdit) => !oldIsEdit);
+                    clearMessageError(message.id);
+                  }}
                   type="button"
                   className="btn"
                 >
@@ -106,7 +119,6 @@ const Message = ({ message, auth, messageRedux, deleteMessage, editMessage }) =>
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  messageRedux: state.message,
 });
 
-export default connect(mapStateToProps, { deleteMessage, editMessage })(Message);
+export default connect(mapStateToProps, { deleteMessage, editMessage, clearMessageError })(Message);

@@ -11,6 +11,7 @@ import {
   EDIT_MESSAGE_LOADING,
   EDIT_MESSAGE_SUCCESS,
   EDIT_MESSAGE_FAIL,
+  CLEAR_MESSAGE_ERROR,
 } from '../types';
 
 const initialState = {
@@ -101,6 +102,14 @@ export default function (state = initialState, { type, payload }) {
         isLoading: false,
         error: payload.error,
         messages: state.messages.filter((m) => m.id !== 0),
+      };
+    case CLEAR_MESSAGE_ERROR:
+      return {
+        ...state,
+        messages: state.messages.map((m) => {
+          if (m.id === payload.id) return { ...m, isLoading: false, error: null };
+          return m;
+        }),
       };
     default:
       return state;
