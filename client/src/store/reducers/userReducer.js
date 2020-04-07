@@ -8,7 +8,7 @@ import {
 } from '../types';
 
 const initialState = {
-  profile: null,
+  profile: {},
   isLoading: false,
   error: null,
 };
@@ -16,13 +16,16 @@ const initialState = {
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_PROFILE_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
     case EDIT_USER_LOADING:
       return {
         ...state,
         isLoading: true,
         error: null,
       };
-
     case GET_PROFILE_SUCCESS:
       return {
         ...state,
@@ -40,8 +43,8 @@ export default function (state = initialState, { type, payload }) {
       return {
         ...state,
         isLoading: false,
-        profile: null,
-        error: payload,
+        profile: {},
+        error: payload.error,
       };
     default:
       return state;

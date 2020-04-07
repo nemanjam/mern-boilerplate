@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
@@ -23,14 +23,23 @@ import './styles.css';
 // gitignore za placeholder avatar
 // delete profile ruta
 
-const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
+const Profile = ({ getProfile, user: { profile, isLoading, error }, editUser }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);
   const [avatar, setAvatar] = useState(null);
+  const retryCount = useRef(0);
 
   useEffect(() => {
     getProfile();
   }, []);
+
+  // refetch profile once if error
+  useEffect(() => {
+    if (error && retryCount.current < 1) {
+      retryCount.current++;
+      getProfile();
+    }
+  }, [error, retryCount.current]);
 
   const onChange = (event) => {
     formik.setFieldValue('image', event.currentTarget.files[0]);
@@ -39,6 +48,7 @@ const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
   };
 
   const handleClickEdit = () => {
+    retryCount.current = 0;
     setIsEdit((oldIsEdit) => !oldIsEdit);
     setImage(null);
     setAvatar(null);
@@ -66,8 +76,6 @@ const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
       setIsEdit(false);
     },
   });
-
-  if (!profile) return 'Loading...';
 
   return (
     <Layout>
@@ -109,6 +117,8 @@ const Profile = ({ getProfile, user: { profile, isLoading }, editUser }) => {
             </div>
           </div>
         )}
+
+        {error && <p className="error">{error}</p>}
 
         {isEdit && (
           <div className="form">

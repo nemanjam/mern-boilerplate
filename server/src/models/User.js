@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import Joi from 'joi';
 
 const { Schema } = mongoose;
 
@@ -15,7 +16,7 @@ const userSchema = new Schema(
       lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      match: [/^[a-zA-Z0-9_]+$/, 'is invalid'],
       index: true,
     },
     email: {
@@ -111,6 +112,21 @@ export async function hashPassword(password) {
 
   return hashedPassword;
 }
+
+export const validateUser = (user) => {
+  const schema = {
+    avatar: Joi.any(),
+    name: Joi.string().min(2).max(30).required(),
+    username: Joi.string()
+      .min(2)
+      .max(20)
+      .regex(/^[a-zA-Z0-9_]+$/)
+      .required(),
+    password: Joi.string().min(6).max(20).allow('').allow(null),
+  };
+
+  return Joi.validate(user, schema);
+};
 
 const User = mongoose.model('User', userSchema);
 

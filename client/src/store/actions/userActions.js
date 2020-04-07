@@ -25,7 +25,7 @@ export const editUser = (formData) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: EDIT_USER_FAIL,
-      payload: err.message,
+      payload: { error: err?.response?.data.message || err.message },
     });
   }
 };
@@ -45,7 +45,7 @@ export const getProfile = () => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: GET_PROFILE_FAIL,
-      payload: err.message,
+      payload: { error: err?.response?.data.message || err.message },
     });
   }
 };
