@@ -28,7 +28,9 @@ const Users = ({ getUsers, users: { users, isLoading } }) => {
               {users.map((user, index) => {
                 return (
                   <div key={index} className="profile">
-                    <img src={user.avatar} className="avatar" />
+                    <Link to={`/${user.username}`}>
+                      <img src={user.avatar} className="avatar" />
+                    </Link>
                     <div className="info-container">
                       <div>
                         <span className="label">Provider: </span>
@@ -44,7 +46,7 @@ const Users = ({ getUsers, users: { users, isLoading } }) => {
                       </div>
                       <div>
                         <span className="label">Username: </span>
-                        <Link to={`/${user.username}`} className="info bold">
+                        <Link to={`/${user.username}`} className="info bold profile-link">
                           {user.username}
                         </Link>
                       </div>

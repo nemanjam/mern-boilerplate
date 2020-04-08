@@ -52,7 +52,9 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
   return (
     <div className={message.isLoading ? 'message loader' : 'message'}>
       <div className="message-header">
-        <img src={message.user.avatar} className="avatar" />
+        <Link to={`/${message.user.username}`}>
+          <img src={message.user.avatar} className="avatar" />
+        </Link>
         <div>
           <Link to={`/${message.user.username}`} className="name">
             {message.user.name}

@@ -70,7 +70,7 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
 
     let message = await Message.findByIdAndUpdate(
       req.params.id,
-      { text: req.body.text, user: req.user.id },
+      { text: req.body.text, user: tempMessage.user.id },
       { new: true },
     );
     if (!message) return res.status(404).json({ message: 'No message found.' });

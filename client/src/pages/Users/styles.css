@@ -36,3 +36,7 @@
 .users .list {
   min-height: 100%;
 }
+
+.users .profile-link {
+  color: rgb(0, 0, 238);
+}
