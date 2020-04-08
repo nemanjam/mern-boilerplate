@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { getMessages } from './messageActions';
 import {
   LOGIN_WITH_OAUTH_LOADING,
   LOGIN_WITH_OAUTH_SUCCESS,
@@ -14,6 +15,9 @@ import {
   ME_LOADING,
   ME_SUCCESS,
   ME_FAIL,
+  RESEED_DATABASE_LOADING,
+  RESEED_DATABASE_SUCCESS,
+  RESEED_DATABASE_FAIL,
 } from '../types';
 
 export const loadMe = () => async (dispatch, getState) => {
@@ -106,8 +110,28 @@ export const logOutUser = (history) => async (dispatch) => {
     dispatch({
       type: LOGOUT_SUCCESS,
     });
-    history.push('/');
+    if (history) history.push('/');
   } catch (err) {}
+};
+
+export const reseedDatabase = () => async (dispatch, getState) => {
+  dispatch({
+    type: RESEED_DATABASE_LOADING,
+  });
+  try {
+    await axios.get('/api/users/reseed');
+
+    dispatch({
+      type: RESEED_DATABASE_SUCCESS,
+    });
+    dispatch(logOutUser());
+    dispatch(getMessages());
+  } catch (err) {
+    dispatch({
+      type: RESEED_DATABASE_FAIL,
+      payload: { error: err?.response?.data.message || err.message },
+    });
+  }
 };
 
 function deleteAllCookies() {

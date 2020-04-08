@@ -67,8 +67,12 @@ export const deleteUser = (id, history) => async (dispatch, getState) => {
     const options = attachTokenToHeaders(getState);
     const response = await axios.delete(`/api/users/${id}`, options);
 
-    dispatch(logOutUser(id, history));
-
+    //logout only if he deleted himself
+    console.log(getState().auth.me.id, response.data.user.id);
+    if (getState().auth.me.id === response.data.user.id) {
+      dispatch(logOutUser(id, history));
+    }
+    history.push('/users');
     dispatch({
       type: DELETE_USER_SUCCESS,
       payload: { message: response.data.user },

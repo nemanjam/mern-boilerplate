@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import requireJwtAuth from '../../middleware/requireJwtAuth';
 import User, { hashPassword, validateUser } from '../../models/User';
 import Message from '../../models/Message';
+import { seedDb } from '../../utils/seed';
 
 const router = Router();
 
@@ -72,6 +73,11 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
   }
 });
 
+router.get('/reseed', async (req, res) => {
+  await seedDb();
+  res.json({ message: 'Database reseeded successfully.' });
+});
+
 router.get('/me', requireJwtAuth, (req, res) => {
   const me = req.user.toJSON();
   res.json({ me });
@@ -108,8 +114,8 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
     if (!(tempUser.id === req.user.id || req.user.role === 'ADMIN'))
       return res.status(400).json({ message: 'You do not have privilegies to delete that user.' });
 
-    if (['email0@email.com', 'email1@email.com'].includes(tempUser.email))
-      return res.status(400).json({ message: 'You can not delete seeded user.' });
+    // if (['email0@email.com', 'email1@email.com'].includes(tempUser.email))
+    //   return res.status(400).json({ message: 'You can not delete seeded user.' });
 
     //delete all messages from that user
     await Message.deleteMany({ user: tempUser.id });
