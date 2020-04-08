@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { getUsers } from '../../store/actions/usersActions';
@@ -34,12 +35,18 @@ const Users = ({ getUsers, users: { users, isLoading } }) => {
                         <span className="info">{user.provider}</span>
                       </div>
                       <div>
+                        <span className="label">Role: </span>
+                        <span className="info">{user.role}</span>
+                      </div>
+                      <div>
                         <span className="label">Name: </span>
                         <span className="info">{user.name}</span>
                       </div>
                       <div>
                         <span className="label">Username: </span>
-                        <span className="info">{user.username}</span>
+                        <Link to={`/${user.username}`} className="info bold">
+                          {user.username}
+                        </Link>
                       </div>
                       <div>
                         <span className="label">Email: </span>

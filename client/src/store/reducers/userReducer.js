@@ -19,10 +19,6 @@ const initialState = {
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_PROFILE_LOADING:
-      return {
-        ...state,
-        isLoading: true,
-      };
     case EDIT_USER_LOADING:
     case DELETE_USER_LOADING:
       return {

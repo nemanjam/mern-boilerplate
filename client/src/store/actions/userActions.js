@@ -15,13 +15,13 @@ import {
 
 import { logOutUser } from './authActions';
 
-export const editUser = (formData) => async (dispatch, getState) => {
+export const editUser = (id, formData) => async (dispatch, getState) => {
   dispatch({
     type: EDIT_USER_LOADING,
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.put('/api/users', formData, options);
+    const response = await axios.put(`/api/users/${id}`, formData, options);
 
     dispatch({
       type: EDIT_USER_SUCCESS,
@@ -35,17 +35,17 @@ export const editUser = (formData) => async (dispatch, getState) => {
   }
 };
 
-export const getProfile = () => async (dispatch, getState) => {
+export const getProfile = (username) => async (dispatch, getState) => {
   dispatch({
     type: GET_PROFILE_LOADING,
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/users/profile', options);
+    const response = await axios.get(`/api/users/${username}`, options);
 
     dispatch({
       type: GET_PROFILE_SUCCESS,
-      payload: { profile: response.data.profile },
+      payload: { profile: response.data.user },
     });
   } catch (err) {
     dispatch({

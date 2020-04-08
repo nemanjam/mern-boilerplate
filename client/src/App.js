@@ -33,8 +33,8 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/profile" component={Profile} />
       <Route path="/users" component={Users} />
+      <Route path="/:username" component={Profile} />
       <Route exact path="/" component={Home} />
     </Switch>
   );

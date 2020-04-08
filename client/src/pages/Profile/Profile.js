@@ -6,6 +6,7 @@ import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
 import { getProfile, editUser, deleteUser } from '../../store/actions/userActions';
+import { loadMe } from '../../store/actions/authActions';
 import Layout from '../../layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import requireAuth from '../../hoc/requireAuth';
@@ -13,38 +14,61 @@ import { profileSchema } from './validation';
 
 import './styles.css';
 
-// nema password za oauth usere ni na klijentu ni serveru
+//// nema password za oauth usere ni na klijentu ni serveru
 // validacija na serveru i error handilng na clientu
 // css i html
-// delete user i logika da ne brise seedovane
+//// delete user i logika da ne brise seedovane
 // admin ruta i hoc
 // error handling login register posto je zajednicki loading i error
 // mongo atlas i heroku deploy package json i promenljive env i config
 // avatar staza u bazu samo fajl
 // gitignore za placeholder avatar
-// delete profile ruta
+//// delete profile ruta
 
 const Profile = ({
   getProfile,
   user: { profile, isLoading, error },
+  auth: { me },
   editUser,
   deleteUser,
+  loadMe,
   history,
+  match,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);
   const [avatar, setAvatar] = useState(null);
   const retryCount = useRef(0);
+  const matchUsername = match.params.username;
 
   useEffect(() => {
-    getProfile();
-  }, []);
+    getProfile(matchUsername);
+  }, [matchUsername]);
+
+  // username edited, redirect to new url
+  useEffect(() => {
+    if (profile.username && matchUsername !== profile.username) {
+      // history.push(`/${profile.username}`);
+    }
+  }, [matchUsername, profile.username]);
+
+  // if changed his own username reload me
+  useEffect(() => {
+    if (
+      me &&
+      profile &&
+      me.id === profile.id && // his own
+      me.username !== profile.username
+    ) {
+      loadMe();
+    }
+  }, [me, profile]);
 
   // refetch profile once if error
   useEffect(() => {
     if (error && retryCount.current < 1) {
       retryCount.current++;
-      getProfile();
+      //getProfile(match.params.username);
     }
   }, [error, retryCount.current]);
 
@@ -59,6 +83,7 @@ const Profile = ({
     setIsEdit((oldIsEdit) => !oldIsEdit);
     setImage(null);
     setAvatar(null);
+    formik.setFieldValue('id', profile.id);
     formik.setFieldValue('name', profile.name);
     formik.setFieldValue('username', profile.username);
   };
@@ -70,6 +95,7 @@ const Profile = ({
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      id: '',
       name: '',
       username: '',
       password: '',
@@ -83,7 +109,7 @@ const Profile = ({
       if (profile.provider === 'email') {
         formData.append('password', values.password);
       }
-      editUser(formData);
+      editUser(values.id, formData);
       setIsEdit(false);
     },
   });
@@ -101,6 +127,10 @@ const Profile = ({
               <div>
                 <span className="label">Provider: </span>
                 <span className="info">{profile.provider}</span>
+              </div>
+              <div>
+                <span className="label">Role: </span>
+                <span className="info">{profile.role}</span>
               </div>
               <div>
                 <span className="label">Name: </span>
@@ -121,7 +151,12 @@ const Profile = ({
                 </span>
               </div>
               <div>
-                <button className="btn" type="button" onClick={handleClickEdit}>
+                <button
+                  className="btn"
+                  type="button"
+                  onClick={handleClickEdit}
+                  disabled={!(me?.username === profile.username || me?.role === 'ADMIN')}
+                >
                   {isEdit ? 'Cancel' : 'Edit'}
                 </button>
               </div>
@@ -150,6 +185,7 @@ const Profile = ({
                   </button>
                 )}
               </div>
+              <input name="id" type="hidden" value={formik.values.id} />
               <div className="input-div">
                 <label>Name:</label>
                 <input
@@ -217,10 +253,11 @@ const Profile = ({
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  auth: state.auth,
 });
 
 export default compose(
   requireAuth,
   withRouter,
-  connect(mapStateToProps, { getProfile, editUser, deleteUser }),
+  connect(mapStateToProps, { getProfile, editUser, deleteUser, loadMe }),
 )(Profile);

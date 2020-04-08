@@ -35,7 +35,7 @@ const userSchema = new Schema(
     },
     name: String,
     avatar: String,
-    role: String,
+    role: { type: String, default: 'USER' },
     bio: String,
     // google
     googleId: {
@@ -62,6 +62,7 @@ userSchema.methods.toJSON = function () {
     username: this.username,
     avatar: this.avatar,
     name: this.name,
+    role: this.role,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };

@@ -26,7 +26,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
               <Link to="/users">Users</Link>
             </li>
             <li className="nav-item">
-              <Link to="/profile">Profile</Link>
+              <Link to={`/${auth.me.username}`}>Profile</Link>
             </li>
             <li className="flex-1" />
             <img className="avatar" src={auth.me.avatar} />

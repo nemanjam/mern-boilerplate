@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useFormik } from 'formik';
 
@@ -53,7 +54,9 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
       <div className="message-header">
         <img src={message.user.avatar} className="avatar" />
         <div>
-          <span className="name">{message.user.name}</span>
+          <Link to={`/${message.user.username}`} className="name">
+            {message.user.name}
+          </Link>
           <span className="username">@{message.user.username}</span>
           <span className="time text-light">{moment(message.createdAt).fromNow()}</span>
           {!moment(message.createdAt).isSame(message.updatedAt, 'minute') && (
