@@ -9,7 +9,6 @@ import './styles.css';
 const Navbar = ({ auth, logOutUser, history }) => {
   const onLogOut = (event) => {
     event.preventDefault();
-
     logOutUser(history);
   };
 

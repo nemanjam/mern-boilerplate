@@ -23,7 +23,7 @@ router.post('/register', async (req, res, next) => {
   const { email, password, name, username } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email: email });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(422).send({ message: 'Email is in use' });
@@ -41,7 +41,7 @@ router.post('/register', async (req, res, next) => {
 
       newUser.registerUser(newUser, (err, user) => {
         if (err) throw err;
-        res.json({ register: true }); // just redirect to login
+        res.json({ message: 'Register success.' }); // just redirect to login
       });
     } catch (err) {
       return next(err);

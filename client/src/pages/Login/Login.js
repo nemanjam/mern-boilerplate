@@ -20,13 +20,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      loginUserWithEmail(
-        values,
-        () => {
-          history.push('/');
-        },
-        () => {},
-      );
+      loginUserWithEmail(values, history);
     },
   });
 

@@ -7,11 +7,11 @@ import _ from 'lodash';
 
 import { useFormik } from 'formik';
 
-import { registerUserWithEmail } from '../../store/actions/authActions';
+import { registerUserWithEmail } from '../../store/actions/registerActions';
 import { registerSchema } from './validation';
 import './styles.css';
 
-const Register = ({ auth, history, registerUserWithEmail }) => {
+const Register = ({ auth, register: { isLoading, error }, history, registerUserWithEmail }) => {
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -21,13 +21,7 @@ const Register = ({ auth, history, registerUserWithEmail }) => {
     },
     validationSchema: registerSchema,
     onSubmit: (values) => {
-      registerUserWithEmail(
-        values,
-        () => {
-          history.push('/login');
-        },
-        () => {},
-      );
+      registerUserWithEmail(values, history);
     },
   });
 
@@ -95,13 +89,9 @@ const Register = ({ auth, history, registerUserWithEmail }) => {
               <p className="error">{formik.errors.password}</p>
             ) : null}
           </div>
-          {auth.error && <p className="error">{auth.error}</p>}
+          {error && <p className="error">{error}</p>}
           <div>
-            <button
-              className="btn submit"
-              type="submit"
-              disabled={auth.isLoading || !formik.isValid}
-            >
+            <button className="btn submit" type="submit" disabled={isLoading || !formik.isValid}>
               Sign up now
             </button>
           </div>
@@ -119,6 +109,7 @@ const Register = ({ auth, history, registerUserWithEmail }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  register: state.register,
 });
 
 export default compose(withRouter, connect(mapStateToProps, { registerUserWithEmail }))(Register);

@@ -6,9 +6,6 @@ import {
   LOGIN_WITH_OAUTH_SUCCESS,
   LOGIN_WITH_OAUTH_FAIL,
   LOGOUT_SUCCESS,
-  REGISTER_WITH_EMAIL_LOADING,
-  REGISTER_WITH_EMAIL_SUCCESS,
-  REGISTER_WITH_EMAIL_FAIL,
   LOGIN_WITH_EMAIL_LOADING,
   LOGIN_WITH_EMAIL_SUCCESS,
   LOGIN_WITH_EMAIL_FAIL,
@@ -39,24 +36,7 @@ export const loadMe = () => async (dispatch, getState) => {
   }
 };
 
-export const registerUserWithEmail = (formData, cb, cbErr) => async (dispatch, getState) => {
-  dispatch({ type: REGISTER_WITH_EMAIL_LOADING });
-  try {
-    const response = await axios.post('/auth/register', formData);
-    dispatch({
-      type: REGISTER_WITH_EMAIL_SUCCESS,
-    });
-    cb();
-  } catch (err) {
-    dispatch({
-      type: REGISTER_WITH_EMAIL_FAIL,
-      payload: { error: err.response.data.message },
-    });
-    cbErr();
-  }
-};
-
-export const loginUserWithEmail = (formData, cb, cbErr) => async (dispatch, getState) => {
+export const loginUserWithEmail = (formData, history) => async (dispatch, getState) => {
   dispatch({ type: LOGIN_WITH_EMAIL_LOADING });
   try {
     const response = await axios.post('/auth/login', formData);
@@ -67,13 +47,12 @@ export const loginUserWithEmail = (formData, cb, cbErr) => async (dispatch, getS
     });
 
     dispatch(loadMe());
-    cb();
+    history.push('/');
   } catch (err) {
     dispatch({
       type: LOGIN_WITH_EMAIL_FAIL,
       payload: { error: err.response.data.message },
     });
-    cbErr();
   }
 };
 
@@ -104,8 +83,10 @@ export const logInUserWithOauth = (token) => async (dispatch, getState) => {
 export const logOutUser = (history) => async (dispatch) => {
   try {
     deleteAllCookies();
+    console.log('called1');
     //just to log user logut on the server
     await axios.get('/auth/logout');
+    console.log('called2');
 
     dispatch({
       type: LOGOUT_SUCCESS,
