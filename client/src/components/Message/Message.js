@@ -85,7 +85,7 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
         ) : (
           <p>{message.text}</p>
         )}
-        {auth.isAuthenticated && auth.me.id === message.user.id && (
+        {auth.isAuthenticated && (auth.me.id === message.user.id || auth.me.role === 'ADMIN') && (
           <>
             {!isEdit ? (
               <>

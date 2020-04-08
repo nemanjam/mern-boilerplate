@@ -48,7 +48,8 @@ router.post('/', requireJwtAuth, async (req, res) => {
 router.delete('/:id', requireJwtAuth, async (req, res) => {
   try {
     const tempMessage = await Message.findById(req.params.id).populate('user');
-    if (tempMessage.user.id !== req.user.id) return res.status(400).json({ message: 'Not the message owner.' });
+    if (!(tempMessage.user.id === req.user.id || req.user.role === 'ADMIN'))
+      return res.status(400).json({ message: 'Not the message owner or admin.' });
 
     const message = await Message.findByIdAndRemove(req.params.id).populate('user');
     if (!message) return res.status(404).json({ message: 'No message found.' });
@@ -64,7 +65,8 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
 
   try {
     const tempMessage = await Message.findById(req.params.id).populate('user');
-    if (tempMessage.user.id !== req.user.id) return res.status(400).json({ message: 'Not the message owner.' });
+    if (!(tempMessage.user.id === req.user.id || req.user.role === 'ADMIN'))
+      return res.status(400).json({ message: 'Not the message owner or admin.' });
 
     let message = await Message.findByIdAndUpdate(
       req.params.id,
