@@ -9,6 +9,7 @@ import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
 import Users from './pages/Users/Users';
+import NotFound from './pages/NotFound/NotFound';
 
 import { logInUserWithOauth, loadMe } from './store/actions/authActions';
 
@@ -34,8 +35,10 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/users" component={Users} />
-      <Route path="/:username" component={Profile} />
+      <Route path="/notfound" component={NotFound} />
+      <Route exact path="/:username" component={Profile} />
       <Route exact path="/" component={Home} />
+      <Route component={NotFound} />
     </Switch>
   );
 };

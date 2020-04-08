@@ -77,11 +77,6 @@ router.get('/me', requireJwtAuth, (req, res) => {
   res.json({ me });
 });
 
-router.get('/profile', requireJwtAuth, (req, res) => {
-  const profile = req.user.toJSON();
-  res.json({ profile });
-});
-
 router.get('/:username', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });

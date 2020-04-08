@@ -35,7 +35,7 @@ export const editUser = (id, formData) => async (dispatch, getState) => {
   }
 };
 
-export const getProfile = (username) => async (dispatch, getState) => {
+export const getProfile = (username, history) => async (dispatch, getState) => {
   dispatch({
     type: GET_PROFILE_LOADING,
   });
@@ -48,6 +48,9 @@ export const getProfile = (username) => async (dispatch, getState) => {
       payload: { profile: response.data.user },
     });
   } catch (err) {
+    if (err?.response.status === 404) {
+      history.push('/notfound');
+    }
     dispatch({
       type: GET_PROFILE_FAIL,
       payload: { error: err?.response?.data.message || err.message },

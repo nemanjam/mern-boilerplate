@@ -42,7 +42,7 @@ const Profile = ({
   const matchUsername = match.params.username;
 
   useEffect(() => {
-    getProfile(matchUsername);
+    getProfile(matchUsername, history);
   }, [matchUsername]);
 
   // username edited, redirect to new url
