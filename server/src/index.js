@@ -48,10 +48,10 @@ app.use('/public', express.static(join(__dirname, '../public')));
 // Serve static assets if in production
 if (isProduction) {
   // Set static folder
-  app.use(express.static('client/build'));
+  app.use(express.static('../client/build'));
 
   app.get('*', (req, res) => {
-    res.sendFile(resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(resolve(__dirname, '../client', 'build', 'index.html'));
   });
 
   const port = process.env.PORT || 80;

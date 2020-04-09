@@ -21,3 +21,7 @@
   width: 200px;
   display: block;
 }
+
+.login .logins {
+  margin: 5px 0;
+}

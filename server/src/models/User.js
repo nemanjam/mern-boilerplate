@@ -68,6 +68,9 @@ userSchema.methods.toJSON = function () {
   };
 };
 
+const isProduction = process.env.NODE_ENV === 'production';
+const secretOrKey = isProduction ? process.env.JWT_SECRET_PROD : process.env.JWT_SECRET_DEV;
+
 userSchema.methods.generateJWT = function () {
   const token = jwt.sign(
     {
@@ -76,7 +79,7 @@ userSchema.methods.generateJWT = function () {
       provider: this.provider,
       email: this.email,
     },
-    process.env.JWT_SECRET_DEV,
+    secretOrKey,
   );
   return token;
 };
