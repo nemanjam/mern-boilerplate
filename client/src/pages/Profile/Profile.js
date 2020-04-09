@@ -45,13 +45,6 @@ const Profile = ({
     getProfile(matchUsername, history);
   }, [matchUsername]);
 
-  // username edited, redirect to new url
-  useEffect(() => {
-    if (profile.username && matchUsername !== profile.username) {
-      // history.push(`/${profile.username}`);
-    }
-  }, [matchUsername, profile.username]);
-
   // if changed his own username reload me
   useEffect(() => {
     if (
@@ -63,14 +56,6 @@ const Profile = ({
       loadMe();
     }
   }, [me, profile]);
-
-  // refetch profile once if error
-  useEffect(() => {
-    if (error && retryCount.current < 1) {
-      retryCount.current++;
-      //getProfile(match.params.username);
-    }
-  }, [error, retryCount.current]);
 
   const onChange = (event) => {
     formik.setFieldValue('image', event.currentTarget.files[0]);
@@ -110,7 +95,7 @@ const Profile = ({
         formData.append('password', values.password);
       }
       editUser(values.id, formData);
-      setIsEdit(false);
+      //setIsEdit(false);
     },
   });
 

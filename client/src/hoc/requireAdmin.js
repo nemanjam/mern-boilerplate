@@ -13,9 +13,8 @@ export default (ChildComponent) => {
       this.shouldNavigateAway();
     }
 
-    //token ima auth nema, prepisi ga sa func component i useefect
     shouldNavigateAway() {
-      if (!this.props.auth.isAuthenticated) {
+      if (!this.props.auth.isAuthenticated && this.props.auth.me?.role !== 'ADMIN') {
         this.props.history.push('/');
       }
     }

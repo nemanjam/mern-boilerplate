@@ -27,6 +27,11 @@ const Navbar = ({ auth, logOutUser, history }) => {
             <li className="nav-item">
               <Link to={`/${auth.me.username}`}>Profile</Link>
             </li>
+            {auth.me?.role === 'ADMIN' && (
+              <li className="nav-item">
+                <Link to="/admin">Admin</Link>
+              </li>
+            )}
             <li className="flex-1" />
             <img className="avatar" src={auth.me.avatar} />
             <li className="nav-item" onClick={onLogOut}>
