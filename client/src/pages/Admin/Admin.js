@@ -11,7 +11,7 @@ const Admin = () => {
       <div className="admin-page">
         <h1>Admin dashboard</h1>
         <p>
-          Only the Admin can access this page. Return back to{' '}
+          This is the Admin page. Only the Admin can access this page. Return back to{' '}
           <Link className="bold" to="/">
             Home
           </Link>

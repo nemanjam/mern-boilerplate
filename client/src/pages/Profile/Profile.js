@@ -108,6 +108,10 @@ const Profile = ({
     <Layout>
       <div className="profile">
         <h1>Profile page</h1>
+        <p>
+          This is the profile page. User can edit his own profile and Admin can edit any user's
+          profile. Only authenticated users can see this page.
+        </p>
         {isLoading ? (
           <Loader />
         ) : (

@@ -49,7 +49,7 @@ const Home = ({ auth, reseedDatabase }) => {
         ) : (
           <>
             <p>
-              Welcome <b>{auth.me.name}</b>!
+              Welcome <span className="name">{auth.me.name}</span>!
             </p>
             <ReseedMessage handleReseed={handleReseed} />
             <MessageForm />
