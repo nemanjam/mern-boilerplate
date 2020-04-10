@@ -27,6 +27,8 @@ export const editUser = (id, formData) => async (dispatch, getState) => {
       type: EDIT_USER_SUCCESS,
       payload: { user: response.data.user },
     });
+
+    //if response.username !== formdata.username history.push('/response.username')
   } catch (err) {
     dispatch({
       type: EDIT_USER_FAIL,

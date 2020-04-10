@@ -27,6 +27,7 @@ import './styles.css';
 
 // hendlovanje staza za slike, default avatar za izbrisane sa heroku
 // readme
+// posle edit user treba redirect na novi username url
 
 // fore
 // za facebook more https apsolutni callback url

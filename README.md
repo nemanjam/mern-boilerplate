@@ -67,7 +67,7 @@ That is the explanation of deployment process for Heroku, it is already all set 
 ```
 heroku login
 heroku create my-own-app-name
-git remote add heroku https://git.heroku.com/my-own-app-name
+git remote add heroku https://git.heroku.com/my-own-app-name.git
 git push heroku master
 heroku open
 ```
