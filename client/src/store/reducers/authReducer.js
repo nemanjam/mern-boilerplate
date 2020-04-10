@@ -57,6 +57,7 @@ export default function (state = initialState, { type, payload }) {
         appLoaded: true,
       };
     case ME_FAIL:
+      localStorage.removeItem('token');
       return {
         ...state,
         isAuthenticated: false,

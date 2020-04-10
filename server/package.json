@@ -35,6 +35,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.1.6",
     "@babel/node": "^7.0.0",
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
