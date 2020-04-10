@@ -25,6 +25,9 @@ import './styles.css';
 // gitignore za placeholder avatar
 //// delete profile ruta
 
+// hendlovanje staza za slike, default avatar za izbrisane sa heroku
+// readme
+
 // fore
 // za facebook more https apsolutni callback url
 // FACEBOOK_CALLBACK_URL=https://mern-boilerplate-demo.herokuapp.com/auth/facebook/callback
