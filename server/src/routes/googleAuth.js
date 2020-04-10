@@ -10,8 +10,7 @@ router.get(
   }),
 );
 
-const isProduction = process.env.NODE_ENV === 'production';
-const successRedirectUrl = isProduction ? process.env.SUCCESS_REDIRECT_URL_PROD : process.env.SUCCESS_REDIRECT_URL_DEV;
+const clientUrl = process.env.NODE_ENV === 'production' ? process.env.CLIENT_URL_PROD : process.env.CLIENT_URL_DEV;
 
 router.get(
   '/google/callback',
@@ -22,7 +21,7 @@ router.get(
   (req, res) => {
     const token = req.user.generateJWT();
     res.cookie('x-auth-cookie', token);
-    res.redirect(successRedirectUrl);
+    res.redirect(clientUrl);
   },
 );
 

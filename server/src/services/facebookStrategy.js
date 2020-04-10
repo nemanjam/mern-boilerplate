@@ -3,12 +3,14 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 
 import User from '../models/User';
 
+const serverUrl = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL_PROD : process.env.SERVER_URL_DEV;
+
 // facebook strategy
 const facebookLogin = new FacebookStrategy(
   {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
-    callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+    callbackURL: `${serverUrl}${process.env.FACEBOOK_CALLBACK_URL}`,
     profileFields: [
       'id',
       'email',

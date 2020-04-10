@@ -12,6 +12,8 @@ import Users from './pages/Users/Users';
 import Admin from './pages/Admin/Admin';
 import NotFound from './pages/NotFound/NotFound';
 
+import Loader from './components/Loader/Loader';
+
 import { logInUserWithOauth, loadMe } from './store/actions/authActions';
 
 const App = ({ logInUserWithOauth, auth, loadMe }) => {
@@ -26,22 +28,28 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
   }, []);
 
   useEffect(() => {
-    if (auth.token && !auth.isAuthenticated) {
+    if (!auth.appLoaded || (auth.token && !auth.isAuthenticated)) {
       loadMe();
     }
-  }, [auth.isAuthenticated, auth.token, loadMe]);
+  }, [auth.isAuthenticated, auth.token, loadMe, auth.appLoaded]);
 
   return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-      <Route path="/users" component={Users} />
-      <Route path="/notfound" component={NotFound} />
-      <Route path="/admin" component={Admin} />
-      <Route exact path="/:username" component={Profile} />
-      <Route exact path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      {auth.appLoaded ? (
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/users" component={Users} />
+          <Route path="/notfound" component={NotFound} />
+          <Route path="/admin" component={Admin} />
+          <Route exact path="/:username" component={Profile} />
+          <Route exact path="/" component={Home} />
+          <Route component={NotFound} />
+        </Switch>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 };
 

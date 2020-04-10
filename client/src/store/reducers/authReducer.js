@@ -17,13 +17,20 @@ const initialState = {
   isLoading: false,
   me: null,
   error: null,
+  appLoaded: false,
 };
 
 export default function (state = initialState, { type, payload }) {
   switch (type) {
+    case ME_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        appLoaded: false,
+        error: null,
+      };
     case LOGIN_WITH_EMAIL_LOADING:
     case LOGIN_WITH_OAUTH_LOADING:
-    case ME_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -47,9 +54,18 @@ export default function (state = initialState, { type, payload }) {
         isLoading: false,
         me: payload.me,
         error: null,
+        appLoaded: true,
+      };
+    case ME_FAIL:
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: false,
+        me: null,
+        error: null,
+        appLoaded: true,
       };
     case LOGOUT_SUCCESS:
-    case ME_FAIL:
     case LOGIN_WITH_EMAIL_FAIL:
       localStorage.removeItem('token');
       return {

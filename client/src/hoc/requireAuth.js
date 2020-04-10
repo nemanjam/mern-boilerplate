@@ -16,6 +16,7 @@ export default (ChildComponent) => {
     //token ima auth nema, prepisi ga sa func component i useefect
     shouldNavigateAway() {
       if (!this.props.auth.isAuthenticated) {
+        console.log('history push');
         this.props.history.push('/');
       }
     }
