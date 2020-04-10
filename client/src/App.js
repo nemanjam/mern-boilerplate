@@ -32,10 +32,10 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
   }, [loadMe]);
 
   useEffect(() => {
-    if (!auth.isLoading && auth.token && !auth.isAuthenticated) {
+    if (!auth.appLoaded && !auth.isLoading && auth.token && !auth.isAuthenticated) {
       loadMe();
     }
-  }, [auth.isAuthenticated, auth.token, loadMe, auth.isLoading]);
+  }, [auth.isAuthenticated, auth.token, loadMe, auth.isLoading, auth.appLoaded]);
 
   return (
     <>
