@@ -28,10 +28,10 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
   }, []);
 
   useEffect(() => {
-    if (!auth.appLoaded || (auth.token && !auth.isAuthenticated)) {
+    if (!auth.isLoading && auth.token && !auth.isAuthenticated) {
       loadMe();
     }
-  }, [auth.isAuthenticated, auth.token, loadMe, auth.appLoaded]);
+  }, [auth.isAuthenticated, auth.token, loadMe, auth.isLoading]);
 
   return (
     <>
