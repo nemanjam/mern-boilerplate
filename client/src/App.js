@@ -60,7 +60,6 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors,
 });
 
 export default compose(connect(mapStateToProps, { logInUserWithOauth, loadMe }))(App);
