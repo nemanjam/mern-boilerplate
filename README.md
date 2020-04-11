@@ -1,8 +1,45 @@
 # MERN Boilerplate
 
+This is fullstack boilerplate with React, Redux, Express, Mongoose and Passport.
+
+Out of the box on server you get User and Message models, both with full CRUD operations, User and Admin roles, server side validation with Joi, Passport with local, JWT, Facebook and Google authorization strategies.
+
+On client you get Redux state management with Thunk for async actions, Formik for forms handling, protected routes with Higher order components.
+
+See Features section for details.
+
 ## Demo
 
+Live demo is available here: **[Demo](https://mern-boilerplate-demo.herokuapp.com/)**
+
 ## Features
+
+### Server
+
+- User and Message models with `1:N` relation
+- Full CRUD REST API operations for both Message and User models
+- Passport authentication with local `email/password` strategy, Facebook and Google OAuth strategies and JWT protected APIs
+- `User` and `Admin` roles
+- NodeJS server with Babel for unified new JS syntax with React client
+- `async/await` syntax across whole app
+- Joi server side validation of user's input
+- Single `.env` file configuration
+- Image upload with Multer
+- Database seed
+
+### Client
+
+- React client with functional components and Hooks
+- Redux state management with Thunk for async actions
+- CSS agnostic, so you don't waste your time replacing my CSS framework with yours
+- Home, Users, Profile, Admin, Notfound, Login and Register pages
+- Protected routes with Higher order components
+- Different views for unauthenticated, authenticated and admin user
+- Edit/Delete forms for Message and User
+- Admin has privileges to edit and delete other users and their messages
+- Layout component, so you can have pages without Navbar
+- Loading states with Loader component
+- Single config file within `/constants` folder
 
 ## Installation
 
@@ -10,11 +47,23 @@
 
 ## Deployment on Heroku
 
+This project is already all set up for deployment on Heroku, you just need to create Heroku application add heroku remote to this repo and push it to `heroku` origin.
+
+```
+$ heroku login
+$ heroku create my-own-app-name
+$ git remote add heroku https://git.heroku.com/my-own-app-name.git
+$ git push heroku master
+$ heroku open
+```
+
+In the following section you can read detailed instruction about Heroku deployment process.
+
 ### Server setup
 
 #### Development
 
-Server uses Babel so that we can use the same newer Javascript syntax like the one used on the Client. In development we are passing `server/src/index.js` file to `babel-node` executable along with `nodemon` daemon. We run that with `npm run server` script.
+Server uses Babel so that we can use the same newer JavaScript syntax like the one used on the Client. In development we are passing `server/src/index.js` file to `babel-node` executable along with `nodemon` daemon. We run that with `npm run server` script.
 
 ```
 "server": "nodemon --exec babel-node src/index.js",
@@ -62,16 +111,8 @@ Before all this happens Heroku needs to install the dependencies for both server
 "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix server && npm install --prefix client && npm run build --prefix client"
 ```
 
-That is the explanation of deployment process for Heroku, it is already all set up in existing repo, you just need to create Heroku application add Heroku remote to this repo and push it to `heroku` origin.
-
-```
-heroku login
-heroku create my-own-app-name
-git remote add heroku https://git.heroku.com/my-own-app-name.git
-git push heroku master
-heroku open
-```
-
 ## References
 
 ## Licence
+
+### MIT
