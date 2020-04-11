@@ -18,6 +18,11 @@ import { logInUserWithOauth, loadMe } from './store/actions/authActions';
 
 const App = ({ logInUserWithOauth, auth, loadMe }) => {
   useEffect(() => {
+    loadMe();
+  }, [loadMe]);
+
+  //redosled hookova
+  useEffect(() => {
     if (window.location.hash === '#_=_') window.location.hash = '';
 
     const cookieJwt = Cookies.get('x-auth-cookie');
@@ -26,10 +31,6 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
       logInUserWithOauth(cookieJwt);
     }
   }, []);
-
-  useEffect(() => {
-    loadMe();
-  }, [loadMe]);
 
   useEffect(() => {
     if (!auth.appLoaded && !auth.isLoading && auth.token && !auth.isAuthenticated) {
