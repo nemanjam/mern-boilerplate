@@ -37,6 +37,91 @@ Live demo is available here: **[Demo](https://mern-boilerplate-demo.herokuapp.co
 
 ## Installation
 
+Read on how to set up this for development. Clone the repo.
+
+```
+$ git clone https://github.com/nemanjam/mern-boilerplate.git
+$ cd mern-boilerplate
+```
+
+### Server
+
+#### .env file
+
+Rename `.env.example` to `.env` and fill in database connection strings, Google and Facebook tokens, JWT secret and your client and server production URLs.
+
+```
+#db
+MONGO_URI_DEV=mongodb://localhost:27017/mernboilerplate
+MONGO_URI_PROD=
+
+#google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CALLBACK_URL=/auth/google/callback
+
+#facebook
+FACEBOOK_APP_ID=
+FACEBOOK_SECRET=
+FACEBOOK_CALLBACK_URL=/auth/facebook/callback
+
+#jwt
+JWT_SECRET_DEV=secret
+JWT_SECRET_PROD=
+
+#site urls
+CLIENT_URL_DEV=https://localhost:3000
+CLIENT_URL_PROD=https://mern-boilerplate-demo.herokuapp.com
+SERVER_URL_DEV=https://localhost:5000
+SERVER_URL_PROD=https://mern-boilerplate-demo.herokuapp.com
+
+#img folder path
+IMAGES_FOLDER_PATH=/public/images/
+```
+
+#### Generate certificates
+
+Facebook OAuth requires that your server runs on `https` in development as well, so you need to generate certificates. Go to `/server/security` folder and run this.
+
+```
+$ cd server/security
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout cert.key -out cert.pem -config req.cnf -sha256
+```
+
+#### Install dependencies
+
+```
+$ cd server
+$ npm install
+```
+
+#### Run the server
+
+You are good to go, server will be available on `https://localhost:5000`
+
+```
+$ npm run server
+```
+
+### Client
+
+Just install the dependencies and run the dev server. App will load on `https://localhost:3000`.
+
+```
+$ cd client
+$ npm install
+$ npm start
+```
+
+Before you push to production you'll need to set your URLs in `client/constants`.
+
+```javascript
+export const FACEBOOK_AUTH_LINK = "https://localhost:5000/auth/facebook";
+export const GOOGLE_AUTH_LINK = "https://localhost:5000/auth/google";
+```
+
+That's it as far for development setup. For production check the `Deployment on Heroku` section.
+
 ## Screenshots
 
 ![Screenshot1](/screenshots/Screenshot_1.png)
@@ -63,7 +148,7 @@ $ git push heroku master
 $ heroku open
 ```
 
-In the following section you can read detailed instruction about Heroku deployment process.
+In the following section you can read detailed instructions about Heroku deployment process.
 
 ### Server setup
 
