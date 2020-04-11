@@ -37,7 +37,7 @@ Live demo is available here: **[Demo](https://mern-boilerplate-demo.herokuapp.co
 
 ## Installation
 
-Read on how to set up this for development. Clone the repo.
+Read on on how to set up this for development. Clone the repo.
 
 ```
 $ git clone https://github.com/nemanjam/mern-boilerplate.git
@@ -226,7 +226,7 @@ export const GOOGLE_AUTH_LINK = "https://my-own-app.herokuapp.com/auth/google";
 ## References
 
 - Brad Traversy [Dev connector 2.0](https://github.com/bradtraversy/devconnector_2.0)
-- Brad traversy [Learn The MERN Stack Youtube playlist](https://www.youtube.com/watch?v=PBTYxXADG_k&list=PLillGF-RfqbbiTGgA77tGO426V3hRF9iE)
+- Brad Traversy [Learn The MERN Stack Youtube playlist](https://www.youtube.com/watch?v=PBTYxXADG_k&list=PLillGF-RfqbbiTGgA77tGO426V3hRF9iE)
 - Thinkster [react-redux-realworld-example-app](https://github.com/gothinkster/react-redux-realworld-example-app)
 - Thinkster [
   node-express-realworld-example-app ](https://github.com/gothinkster/node-express-realworld-example-app)

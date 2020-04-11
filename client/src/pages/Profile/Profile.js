@@ -18,11 +18,11 @@ import './styles.css';
 // validacija na serveru i error handilng na clientu
 // css i html
 //// delete user i logika da ne brise seedovane
-// admin ruta i hoc
+//// admin ruta i hoc
 // error handling login register posto je zajednicki loading i error
-// mongo atlas i heroku deploy package json i promenljive env i config
-// avatar staza u bazu samo fajl
-// gitignore za placeholder avatar
+//// mongo atlas i heroku deploy package json i promenljive env i config
+//// avatar staza u bazu samo fajl
+//// gitignore za placeholder avatar
 //// delete profile ruta
 
 // hendlovanje staza za slike, default avatar za izbrisane sa heroku
