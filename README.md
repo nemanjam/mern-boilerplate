@@ -113,13 +113,6 @@ $ npm install
 $ npm start
 ```
 
-Before you push to production you'll need to set your URLs in `client/constants`.
-
-```javascript
-export const FACEBOOK_AUTH_LINK = "https://localhost:5000/auth/facebook";
-export const GOOGLE_AUTH_LINK = "https://localhost:5000/auth/google";
-```
-
 That's it as far for development setup. For production check the `Deployment on Heroku` section.
 
 ## Screenshots
@@ -220,7 +213,26 @@ Before all this happens Heroku needs to install the dependencies for both server
 "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix server && npm install --prefix client && npm run build --prefix client"
 ```
 
+### Client Setup
+
+Before you push to production you'll need to set your URLs in `client/constants`. That's it.
+
+```javascript
+export const FACEBOOK_AUTH_LINK =
+  "https://my-own-app.herokuapp.com/auth/facebook";
+export const GOOGLE_AUTH_LINK = "https://my-own-app.herokuapp.com/auth/google";
+```
+
 ## References
+
+- Brad Traversy [Dev connector 2.0](https://github.com/bradtraversy/devconnector_2.0)
+- Brad traversy [Learn The MERN Stack Youtube playlist](https://www.youtube.com/watch?v=PBTYxXADG_k&list=PLillGF-RfqbbiTGgA77tGO426V3hRF9iE)
+- Thinkster [react-redux-realworld-example-app](https://github.com/gothinkster/react-redux-realworld-example-app)
+- Thinkster [
+  node-express-realworld-example-app ](https://github.com/gothinkster/node-express-realworld-example-app)
+- Quinston Pimenta [Deploy React with Node (Express, configured for ES6, Babel) to Heroku (without babel-node)](https://www.youtube.com/watch?v=mvI25HLDfR4)
+
+- Kim Nguyen [How to Deploy ES6 Node.js & Express back-end to Heroku](https://medium.com/@kimtnguyen/how-to-deploy-es6-node-js-express-back-end-to-heroku-7e6743e8d2ff)
 
 ## Licence
 
