@@ -54,17 +54,7 @@ const Profile = ({
     getProfile(matchUsername, history);
   }, [matchUsername]);
 
-  // if changed his own username reload me
-  useEffect(() => {
-    if (
-      me &&
-      profile &&
-      me.id === profile.id && // his own
-      me.username !== profile.username
-    ) {
-      loadMe();
-    }
-  }, [me, profile]);
+  // if changed his own username reload me, done in userActions
 
   const onChange = (event) => {
     formik.setFieldValue('image', event.currentTarget.files[0]);

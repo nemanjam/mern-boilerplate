@@ -13,7 +13,7 @@ import {
   DELETE_USER_FAIL,
 } from '../types';
 
-import { logOutUser } from './authActions';
+import { logOutUser, loadMe } from './authActions';
 
 export const editUser = (id, formData, history) => async (dispatch, getState) => {
   dispatch({
@@ -27,7 +27,8 @@ export const editUser = (id, formData, history) => async (dispatch, getState) =>
       type: EDIT_USER_SUCCESS,
       payload: { user: response.data.user },
     });
-
+    // edited him self, reload me
+    if (getState().auth.me?.id === response.data.user.id) dispatch(loadMe());
     history.push(`/${response.data.user.username}`);
   } catch (err) {
     dispatch({
