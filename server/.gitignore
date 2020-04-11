@@ -8,3 +8,9 @@ package-lock.json
 
 /.vscode
 .env
+
+!public/images
+public/images/*
+!public/images/avatar0.jpg
+!public/images/avatar1.jpg
+!public/images/avatar2.jpg

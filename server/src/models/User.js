@@ -1,3 +1,5 @@
+import fs from 'fs';
+import { join } from 'path';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -54,13 +56,21 @@ const userSchema = new Schema(
   { timestamps: true },
 );
 
+console.log(join(__dirname, '../..', process.env.IMAGES_FOLDER_PATH));
+
 userSchema.methods.toJSON = function () {
+  // if not exists avatar1 default
+  const absoluteAvatarFilePath = `${join(__dirname, '../..', process.env.IMAGES_FOLDER_PATH)}${this.avatar}`;
+  const avatar = fs.existsSync(absoluteAvatarFilePath)
+    ? `${process.env.IMAGES_FOLDER_PATH}${this.avatar}`
+    : `${process.env.IMAGES_FOLDER_PATH}avatar1.jpg`;
+
   return {
     id: this._id,
     provider: this.provider,
     email: this.email,
     username: this.username,
-    avatar: this.avatar,
+    avatar: avatar,
     name: this.name,
     role: this.role,
     createdAt: this.createdAt,

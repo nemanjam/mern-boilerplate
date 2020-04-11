@@ -46,8 +46,7 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
 
     let avatarPath = null;
     if (req.file) {
-      const url = req.protocol + '://' + req.get('host');
-      avatarPath = `${url}/public/images/${req.file.filename}`;
+      avatarPath = req.file.filename;
     }
 
     // if fb or google user provider dont update password
