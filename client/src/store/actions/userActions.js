@@ -15,7 +15,7 @@ import {
 
 import { logOutUser } from './authActions';
 
-export const editUser = (id, formData) => async (dispatch, getState) => {
+export const editUser = (id, formData, history) => async (dispatch, getState) => {
   dispatch({
     type: EDIT_USER_LOADING,
   });
@@ -28,7 +28,7 @@ export const editUser = (id, formData) => async (dispatch, getState) => {
       payload: { user: response.data.user },
     });
 
-    //if response.username !== formdata.username history.push('/response.username')
+    history.push(`/${response.data.user.username}`);
   } catch (err) {
     dispatch({
       type: EDIT_USER_FAIL,
@@ -70,7 +70,6 @@ export const deleteUser = (id, history) => async (dispatch, getState) => {
     const response = await axios.delete(`/api/users/${id}`, options);
 
     //logout only if he deleted himself
-    console.log(getState().auth.me.id, response.data.user.id);
     if (getState().auth.me.id === response.data.user.id) {
       dispatch(logOutUser(id, history));
     }

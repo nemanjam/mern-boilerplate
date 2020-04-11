@@ -27,7 +27,7 @@ import './styles.css';
 
 // hendlovanje staza za slike, default avatar za izbrisane sa heroku
 // readme
-// posle edit user treba redirect na novi username url
+//// posle edit user treba redirect na novi username url
 
 // fore
 // za facebook more https apsolutni callback url
@@ -103,7 +103,7 @@ const Profile = ({
       if (profile.provider === 'email') {
         formData.append('password', values.password);
       }
-      editUser(values.id, formData);
+      editUser(values.id, formData, history);
       //setIsEdit(false);
     },
   });
