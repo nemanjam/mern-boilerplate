@@ -138,6 +138,8 @@ That's it as far for development setup. For production check the `Deployment on 
 
 ## Deployment on Heroku
 
+#### Push to Heroku
+
 This project is already all set up for deployment on Heroku, you just need to create Heroku application add heroku remote to this repo and push it to `heroku` origin.
 
 ```
@@ -146,6 +148,22 @@ $ heroku create my-own-app-name
 $ git remote add heroku https://git.heroku.com/my-own-app-name.git
 $ git push heroku master
 $ heroku open
+```
+
+#### Database setup
+
+But before that you need MongoDB database, so go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas), create cluster, whitelist all IPs and get database URL. Set that URL in `.env` file as `MONGO_URI_PROD`.
+
+```
+MONGO_URI_PROD=mongodb+srv://<your-username-here>:<your-password-here>@cluster0-abcd.mongodb.net/test?retryWrites=true&w=majority
+```
+
+If you don't insert environment variables in Heroku manually via web interface or console you'll need to remove `.env` file from `server/.gitignore` and push it to Heroku. Never push `.env` file to development repo though.
+
+```
+...
+#.env #comment out .env file
+...
 ```
 
 In the following section you can read detailed instructions about Heroku deployment process.
