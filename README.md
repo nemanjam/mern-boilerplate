@@ -2,12 +2,6 @@
 
 This is fullstack boilerplate with React, Redux, Express, Mongoose and Passport.
 
-Out of the box on server you get User and Message models, both with full CRUD operations, User and Admin roles, server side validation with Joi, Passport with local, JWT, Facebook and Google authorization strategies.
-
-On client you get Redux state management with Thunk for async actions, Formik for forms handling, protected routes with Higher order components.
-
-See Features section for details.
-
 ## Demo
 
 Live demo is available here: **[Demo](https://mern-boilerplate-demo.herokuapp.com/)**
@@ -18,7 +12,7 @@ Live demo is available here: **[Demo](https://mern-boilerplate-demo.herokuapp.co
 
 - User and Message models with `1:N` relation
 - Full CRUD REST API operations for both Message and User models
-- Passport authentication with local `email/password` strategy, Facebook and Google OAuth strategies and JWT protected APIs
+- Passport authentication with local `email/password`, Facebook and Google OAuth strategies and JWT protected APIs
 - `User` and `Admin` roles
 - NodeJS server with Babel for unified new JS syntax with React client
 - `async/await` syntax across whole app
@@ -35,7 +29,7 @@ Live demo is available here: **[Demo](https://mern-boilerplate-demo.herokuapp.co
 - Home, Users, Profile, Admin, Notfound, Login and Register pages
 - Protected routes with Higher order components
 - Different views for unauthenticated, authenticated and admin user
-- Edit/Delete forms for Message and User
+- Edit/Delete forms for Message and User with Formik and Yup validation
 - Admin has privileges to edit and delete other users and their messages
 - Layout component, so you can have pages without Navbar
 - Loading states with Loader component
