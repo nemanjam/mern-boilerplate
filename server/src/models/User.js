@@ -117,13 +117,15 @@ userSchema.methods.comparePassword = function (candidatePassword, callback) {
   });
 };
 
+// const delay = (t, ...vs) => new Promise(r => setTimeout(r, t, ...vs)) or util.promisify(setTimeout)
+
 export async function hashPassword(password) {
   const saltRounds = 10;
 
   const hashedPassword = await new Promise((resolve, reject) => {
     bcrypt.hash(password, saltRounds, function (err, hash) {
       if (err) reject(err);
-      resolve(hash);
+      else resolve(hash);
     });
   });
 
