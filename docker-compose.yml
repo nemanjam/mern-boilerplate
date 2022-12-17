@@ -1,5 +1,14 @@
 version: '3.8'
 
+# alternative 1 - inject separate env files into containers
+# env_file:
+#   - ./client/.env
+# env_file:
+#   - ./server/.env
+# 
+# alternative 2 - put all vars into single .env and forward vars through docker-compose.yml
+# environment: ...
+
 services:
   mdp-client:
     container_name: mdp-client
@@ -16,13 +25,16 @@ services:
       - internal-client
     environment:
       - NODE_ENV=production
-    env_file:
-      - ./client/.env
+      # forwarded
+      - REACT_APP_BASE_URL
+    # env_file:
+    #   - ./client/.env
     
     # nginx ports
     # either open port or route through traefik
     ports:
-      - '3002:80'
+      - '3080:80'
+      # - '3443:443' # must edit nginx.conf
     labels:
       - 'traefik.enable=true'
       - 'traefik.docker.network=proxy'
@@ -43,8 +55,19 @@ services:
       - '5000'
     environment:
       - NODE_ENV=production
-    env_file:
-      - ./server/.env
+      # forwarded
+      - MONGO_URI_PROD
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - GOOGLE_CALLBACK_URL
+      - FACEBOOK_APP_ID
+      - FACEBOOK_SECRET
+      - FACEBOOK_CALLBACK_URL
+      - JWT_SECRET_PROD
+      - CLIENT_URL_PROD
+      - SERVER_URL_PROD
+    # env_file:
+    #   - ./server/.env
     networks:
       - default
       - internal-client
@@ -55,8 +78,13 @@ services:
     restart: unless-stopped
     ports:
       - '27017'
-    env_file:
-      - ./server/.env
+    environment:
+      # forwarded
+    - MONGO_INITDB_DATABASE
+    - MONGO_INITDB_ROOT_USERNAME
+    - MONGO_INITDB_ROOT_PASSWORD
+    # env_file:
+    #   - ./server/.env
     volumes:
       - ./server/docker/mongo-data:/data/db
     networks:
