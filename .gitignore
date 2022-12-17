@@ -1,0 +1,16 @@
+
+client/node_modules
+server/node_modules
+
+client/npm-debug.log*
+
+client/build
+
+**/.env*
+!**/.env*.example
+
+# ignore mongo data
+!server/docker/mongo-data
+server/docker/mongo-data/*
+!server/docker/mongo-data/.gitkeep
+

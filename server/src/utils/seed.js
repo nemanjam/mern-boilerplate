@@ -4,13 +4,14 @@ import { join } from 'path';
 import User from '../models/User';
 import Message from '../models/Message';
 import { deleteAllAvatars } from './utils';
+import { IMAGES_FOLDER_PATH } from './constants';
 
 export const seedDb = async () => {
   console.log('Seeding database...');
 
   await User.deleteMany({});
   await Message.deleteMany({});
-  await deleteAllAvatars(join(__dirname, '../..', process.env.IMAGES_FOLDER_PATH));
+  await deleteAllAvatars(join(__dirname, '../..', IMAGES_FOLDER_PATH));
 
   // create 3 users
   const usersPromises = [...Array(3).keys()].map((index, i) => {

@@ -1,0 +1,14 @@
+.git/
+.gitignore
+**/.gitkeep
+**/.DS_Store
+.dockerignore
+Dockerfile*
+docker-compose*.yml
+README.md
+LICENCE
+
+**/node_modules
+**/build
+
+screenshots/
