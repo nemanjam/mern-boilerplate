@@ -11,15 +11,19 @@
 .login .fb {
   background-color: #3b5998;
   color: white;
-  width: 200px;
   display: block;
+  text-align: center;
 }
 
 .login .google {
   background-color: #dd4b39;
   color: white;
-  width: 200px;
   display: block;
+  text-align: center;
+}
+
+.login .login-text {
+  min-width: 250px;
 }
 
 .login .logins {

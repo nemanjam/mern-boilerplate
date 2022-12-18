@@ -38,7 +38,7 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
     const tempUser = await User.findById(req.params.id);
     if (!tempUser) return res.status(404).json({ message: 'No such user.' });
     if (!(tempUser.id === req.user.id || req.user.role === 'ADMIN'))
-      return res.status(400).json({ message: 'You do not have privilegies to edit this user.' });
+      return res.status(400).json({ message: 'You do not have privileges to edit this user.' });
 
     //validate name, username and password
     const { error } = validateUser(req.body);
@@ -57,7 +57,7 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
 
     const existingUser = await User.findOne({ username: req.body.username });
     if (existingUser && existingUser.id !== tempUser.id) {
-      return res.status(400).json({ message: 'Username alredy taken.' });
+      return res.status(400).json({ message: 'Username already taken.' });
     }
 
     const updatedUser = { avatar: avatarPath, name: req.body.name, username: req.body.username, password };
