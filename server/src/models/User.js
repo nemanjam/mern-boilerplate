@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';
 import { isValidUrl } from '../utils/utils';
-import { IMAGES_FOLDER_PATH } from './utils/constants';
+import { IMAGES_FOLDER_PATH } from '../utils/constants';
 
 const { Schema } = mongoose;
 

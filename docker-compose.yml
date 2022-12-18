@@ -13,8 +13,7 @@ services:
   mdp-client:
     container_name: mdp-client
     restart: unless-stopped
-    # set prod image here
-    # image: ...
+    image: nemanjamitic/mern-boilerplate-client:latest
     build:
       # src must be in context
       context: ./client
@@ -32,13 +31,15 @@ services:
     
     # nginx ports
     # either open port or route through traefik
-    ports:
-      - '3080:80'
-      # - '3443:443' # must edit nginx.conf
+    # ports:
+    # - '3080:80'
+    # - '3443:443' # must edit nginx.conf
+
+    # handles everything except /api and /public/images
     labels:
       - 'traefik.enable=true'
       - 'traefik.docker.network=proxy'
-      - 'traefik.http.routers.mb-client-secure.rule=Host(`${SITE_HOSTNAME}`)'
+      - 'traefik.http.routers.mb-client-secure.rule=Host(`${SITE_HOSTNAME}`) && !PathRegexp(`^(/api|/public/images)`)'
       - 'traefik.http.routers.mb-client-secure.entrypoints=websecure'
       - 'traefik.http.routers.mb-client-secure.service=mb-client-svc'
       - 'traefik.http.services.mb-client-svc.loadbalancer.server.port=80'
@@ -46,13 +47,12 @@ services:
   mdp-server:
     container_name: mdp-server
     restart: unless-stopped
+    image: nemanjamitic/mern-boilerplate-server:latest
     build:
       context: ./server
       dockerfile: docker/Dockerfile
     depends_on:
       - mdp-mongo
-    ports:
-      - '5000'
     environment:
       - NODE_ENV=production
       # forwarded
@@ -68,9 +68,25 @@ services:
       - SERVER_URL_PROD
     # env_file:
     #   - ./server/.env
+    volumes:
+      - ./server/public/images:/home/node/app/server/public/images
     networks:
       - default
       - internal-client
+
+    # either open port or route through traefik
+    # ports:
+    #   - '5000'
+      
+    # must be exposed through traefik too
+    # handles /api and /public/images
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=proxy'
+      - 'traefik.http.routers.mb-server-secure.rule=Host(`${SITE_HOSTNAME}`) && PathRegexp(`^(/api|/public/images)`)'
+      - 'traefik.http.routers.mb-server-secure.entrypoints=websecure'
+      - 'traefik.http.routers.mb-server-secure.service=mb-server-svc'
+      - 'traefik.http.services.mb-server-svc.loadbalancer.server.port=80'
 
   mdp-mongo:
     image: mongo:6.0.3

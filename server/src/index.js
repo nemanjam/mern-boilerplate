@@ -43,16 +43,18 @@ mongoose
 
 // Use Routes
 app.use('/', routes);
-app.use('/public', express.static(join(__dirname, '../public')));
+app.use('/public/images', express.static(join(__dirname, '../public/images')));
 
 // Serve static assets if in production
 if (isProduction) {
   // Set static folder
-  app.use(express.static(join(__dirname, '../../client/build')));
+  // nginx will handle this
+  // app.use(express.static(join(__dirname, '../../client/build')));
 
-  app.get('*', (req, res) => {
-    res.sendFile(resolve(__dirname, '../..', 'client', 'build', 'index.html')); // index is in /server/src so 2 folders up
-  });
+  // app.get('*', (req, res) => {
+  //   // index is in /server/src so 2 folders up
+  //   res.sendFile(resolve(__dirname, '../..', 'client', 'build', 'index.html')); 
+  // });
 
   const port = process.env.PORT || 80;
   app.listen(port, () => console.log(`Server started on port ${port}`));
