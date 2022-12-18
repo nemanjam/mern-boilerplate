@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start-prod": "npm run build && node ./build/index.js",
+    "docker:start:prod": "node ./build/index.js",
     "build": "npm run clean && npm run build-babel",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
