@@ -10,7 +10,7 @@
     "formik": "^2.1.4",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
