@@ -31,7 +31,6 @@
     "extends": "react-app"
   },
   "homepage": ".",
-  "proxy": "https://localhost:5000",
   "browserslist": {
     "production": [
       ">0.2%",

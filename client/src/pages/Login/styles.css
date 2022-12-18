@@ -23,6 +23,7 @@
 }
 
 .login .login-text {
+  display: inline-block;
   min-width: 250px;
 }
 
