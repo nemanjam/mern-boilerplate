@@ -4,7 +4,15 @@ This is full stack boilerplate with React, Redux, Express, Mongoose and Passport
 
 ## Demo
 
-Live demo is available here: **[Demo](https://mern-boilerplate.localhost3002.live)**
+- Live demo is available here: **[Demo](https://mern-boilerplate.localhost3002.live)**
+
+## Deployment with Docker (2023. update)
+
+Since Heroku is no longer free I made Docker production deployment that you can use on any Linux VPS.
+
+- original [mern-docker-prod)](https://github.com/nemanjam/mern-docker-prod) repository with Docker code and instructions that you can reuse to deploy your own Mern apps
+- Traefik part of the deployment [traefik-proxy](https://github.com/nemanjam/traefik-proxy) and [traefik-proxy/apps/mern-boilerplate](https://github.com/nemanjam/traefik-proxy/tree/main/apps/mern-boilerplate)
+
 
 ## Features
 
