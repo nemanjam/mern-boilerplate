@@ -27,4 +27,4 @@ ENV NODE_ENV=production
 RUN npm install
 RUN npm run build
 
-CMD [ "pm2-runtime", "--no-autorestart", "npm", "--", "run", "docker:start:prod" ]
+CMD [ "pm2-runtime", "--no-auto-exit", "npm", "--", "run", "docker:start:prod" ]
