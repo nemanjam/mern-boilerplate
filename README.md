@@ -4,7 +4,7 @@ This is full stack boilerplate with React, Redux, Express, Mongoose and Passport
 
 ## Demo
 
-- Live demo is available here: **[https://mern-boilerplate.amd2.nemanjamitic.com](https://mern-boilerplate.amd2.nemanjamitic.com)**
+- Live demo is available here: **[https://mern-boilerplate.arm1.nemanjamitic.com](https://mern-boilerplate.arm1.nemanjamitic.com)**
 
 ## Deployment with Docker (2023. update)
 

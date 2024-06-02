@@ -2,6 +2,12 @@
   "name": "mern-boilerplate",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "set HTTPS=true&&react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -20,12 +26,6 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "yup": "^0.28.3"
-  },
-  "scripts": {
-    "start": "set HTTPS=true&&react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
